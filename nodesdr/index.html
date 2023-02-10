@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RadioStar web interface</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <canvas id="myChart"></canvas>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/fft.js"></script>
+    <script>
+        var socket = io();
+
+        socket.on("data", data => {
+            let fft = new FFTJS(data.length);
+            let out = fft.createComplexArray();
+
+            data.forEach(e => {
+                if (e == NaN) {
+                    console.log("nNANANKFKDKJSDF");
+                }
+            });
+
+            fft.transform(out, fft.toComplexArray(data));
+
+            //console.log(out);
+
+            chart.data.datasets[0].data = new Array();
+
+            let n = out.length;
+
+            for (let i = 2; i < n; i += 2) {
+                let o = new Object();
+
+                o.x = i;
+                o.y = (out[i]*out[i] + out[i + 1]*out[i + 1])/n;
+
+                chart.data.datasets[0].data.push(o);
+            }
+
+            chart.update();
+        });
+
+        const ctx = document.getElementById('myChart');
+
+        let chart = new Chart(ctx, {
+            type: "scatter",
+            data: {
+                datasets: [{
+                    label: "Data",
+                    data: [{
+                        x: -10,
+                        y: 0
+                    }, {
+                        x: 0,
+                        y: 10
+                    }, {
+                        x: 10,
+                        y: 5
+                    }, {
+                        x: 0.5,
+                        y: 5.5
+                    }],
+                    backgroundColor: "rgb(255, 99, 132)"
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: "linear",
+                        position: "bottom"
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
