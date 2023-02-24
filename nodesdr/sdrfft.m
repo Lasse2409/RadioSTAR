@@ -87,7 +87,7 @@ end
 
 power = 10*log10(mean(power));
 
-power(power > 17) = mean(power);
+%power(power > 17) = mean(power(400:450));
 
 fshift = (-N/2:N/2-1)*(fs/N) + cf;
 
