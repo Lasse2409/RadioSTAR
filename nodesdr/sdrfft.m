@@ -46,7 +46,7 @@ figure(1);
 clf;
 hold on;
 
-q = 1000;
+q = 256;
 Q = floor(length(fulldata)/q);
 
 power = zeros(Q, q);
@@ -87,9 +87,13 @@ end
 
 power = 10*log10(mean(power));
 
-%power(power > 17) = mean(power(400:450));
+%power(power > 20) = mean(power(20:30));
+pTemp = power(power < 20);
 
 fshift = (-N/2:N/2-1)*(fs/N) + cf;
+
+fshift = fshift(power < 20);
+power = pTemp;
 
 plot(fshift, power);
 
