@@ -13,10 +13,16 @@ def sky_box(N, AZ, EL):
 
     az = np.linspace(AZ[0], AZ[1], N)
     el = np.linspace(EL[0], EL[1], N)
+    el_reversed = np.flip(el,0)
 
-    for idx1, val1 in enumerate(az):
-        for idx2, val2 in enumerate(el):  
-            sky_horizontal[idx1*N + idx2, :] = np.array([val1,val2])
+    for idx1 in range(len(az)):
+        for idx2 in range(len(el)):  
+            sky_horizontal[idx1*N + idx2, 0] = az[idx1]
+            if idx1%2 == 0:
+                sky_horizontal[idx1*N + idx2, 1] = el[idx2]
+            else:
+                sky_horizontal[idx1*N + idx2, 1] = el_reversed[idx2]
+
     return sky_horizontal
 
 azOffset = 222.8
