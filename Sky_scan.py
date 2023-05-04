@@ -7,6 +7,7 @@ import time
 from rtlsdr import *
 from pylab import *
 from datetime import datetime
+import os
 
 from src.Coordinate_transforms import coordinates
 from src.rotor import rotor
@@ -28,15 +29,18 @@ def sky_box(N, AZ, EL):
 
     return sky_horizontal
 
-azOffset = 222.8
-elOffset = 1
+#azOffset = 222.8
+#elOffset = 1
 
-N = 4
-az_start = 220
-az_stop = 229
+azOffset = 0
+elOffset  = 0
 
-el_start = 50
-el_stop = 59
+N = 20
+az_start = 160
+az_stop = 250
+
+el_start = 10
+el_stop = 50
 
 alt = 17.
 lat = 55.367511
@@ -58,6 +62,8 @@ print(np.transpose(coordinates.Galactic_to_horizontal(year, month, day, hour, mi
 
 R = rotor("192.168.1.104", 23)
 
+os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
+
 for idx in range(len(sky_galactic[:, 0])):
     sky_horizontal_measured[idx, :] = np.transpose(coordinates.Galactic_to_horizontal(year, month, day, hour, minute, second, lat, lon, alt, sky_galactic[idx,0], sky_galactic[idx,1], now = True))
     print("Going to: (" + str(sky_horizontal_measured[idx, 0]) + ", " + str(sky_horizontal_measured[idx, 1]) + ")")
@@ -69,7 +75,7 @@ for idx in range(len(sky_galactic[:, 0])):
     sdr.center_freq = 1420e6
     sdr.gain = 49.6
 
-    samples = sdr.read_samples(256*1024)
+    samples = sdr.read_samples(256*1024*4)
     sdr.close()
 
     f = open("data/data-" + str(idx) + ".dat", "w")
@@ -86,5 +92,7 @@ for idx in range(len(sky_galactic[:, 0])):
 
     R.status()
     print("Measuring data...")
+
+os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
 
 print("Done!")
