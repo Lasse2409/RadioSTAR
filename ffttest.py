@@ -20,7 +20,7 @@ for i in range(N-1):
 sdr.close()
 
 # use matplotlib to estimate and plot the PSD
-psd(samples, NFFT=256*N, Fs=sdr.sample_rate/1e6, Fc=sdr.center_freq/1e6)
+psd(samples, NFFT=256, Fs=sdr.sample_rate/1e6, Fc=sdr.center_freq/1e6)
 xlabel('Frequency (MHz)')
 ylabel('Relative power (dB)')
 

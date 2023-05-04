@@ -4,6 +4,9 @@ import numpy as np
 from astropy.time import Time
 from datetime import datetime
 import time
+from rtlsdr import *
+from pylab import *
+from datetime import datetime
 
 from src.Coordinate_transforms import coordinates
 from src.rotor import rotor
@@ -55,22 +58,33 @@ print(np.transpose(coordinates.Galactic_to_horizontal(year, month, day, hour, mi
 
 R = rotor("192.168.1.104", 23)
 
-idx = 0
+for idx in range(len(sky_galactic[:, 0])):
+    sky_horizontal_measured[idx, :] = np.transpose(coordinates.Galactic_to_horizontal(year, month, day, hour, minute, second, lat, lon, alt, sky_galactic[idx,0], sky_galactic[idx,1], now = True))
+    print("Going to: (" + str(sky_horizontal_measured[idx, 0]) + ", " + str(sky_horizontal_measured[idx, 1]) + ")")
+    R.set(sky_horizontal_measured[idx, 0] - azOffset, sky_horizontal_measured[idx, 1] - elOffset)
 
-def callback():
+    sdr = RtlSdr()
+
+    sdr.sample_rate = 2.4e6
+    sdr.center_freq = 1420e6
+    sdr.gain = 49.6
+
+    samples = sdr.read_samples(256*1024)
+    sdr.close()
+
+    f = open("data/data-" + str(idx) + ".dat", "w")
+    f.write("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
+    f.write("#Galactic latitude: " + str(sky_galactic[idx, 0]) + "\n")
+    f.write("#Galactic longitude: " + str(sky_galactic[idx, 1]) + "\n")
+
+    ps, freqs = psd(samples, NFFT=256, Fs=sdr.sample_rate/1e6, Fc=sdr.center_freq/1e6)
+
+    for j in range(len(ps)):
+        f.write(str(ps[j]) + ", " + str(freqs[j]) + "\n")
+
+    f.close()
+
     R.status()
     print("Measuring data...")
-
-    global idx
-    idx += 1
-
-    if (idx < len(sky_horizontal[:, 0])):
-        sky_horizontal_measured[idx,:] = np.transpose(coordinates.Galactic_to_horizontal(year, month, day, hour, minute, second, lat, lon, alt, sky_galactic[idx,0], sky_galactic[idx,1], now = True))
-        print("Going to: (" + str(sky_horizontal_measured[idx, 0]) + ", " + str(sky_horizontal_measured[idx, 1]) + ")")
-        R.set(sky_horizontal_measured[idx, 0] - azOffset, sky_horizontal_measured[idx, 1] - elOffset, callback)
-
-sky_horizontal_measured[0,:] = np.transpose(coordinates.Galactic_to_horizontal(year, month, day, hour, minute, second, lat, lon, alt, sky_galactic[idx,0], sky_galactic[idx,1], now = True))
-print("Going to: (" + str(sky_horizontal_measured[idx, 0]) + ", " + str(sky_horizontal_measured[idx, 1]) + ")")
-R.set(sky_horizontal_measured[idx, 0] - azOffset, sky_horizontal_measured[idx, 1] - elOffset, callback)
 
 print("Done!")

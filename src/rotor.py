@@ -49,7 +49,7 @@ class rotor:
             0x20
         ]))
         
-    def set(self, ez, el, callback):
+    def set(self, ez, el):
         self.setInt(ez, el)
         time.sleep(0.5)
         self.statusInt()
@@ -69,8 +69,6 @@ class rotor:
             time.sleep(0.5)
 
             self.statusInt()
-
-        callback()
 
 
     def stop(self):
