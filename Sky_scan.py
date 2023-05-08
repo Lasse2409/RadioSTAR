@@ -70,9 +70,9 @@ for idx in range(len(sky_galactic[:, 0])):
     header.append("#RA: " + str(measured_equatorial[idx, 0]) + "\n")
     header.append("#Dec: " + str(measured_equatorial[idx, 1]) + "\n")
 
-    utilities.rtlSample(256*1024*4, 2.4e6, 1420e6, 123, header)
+    #utilities.rtlSample(256*1024*4, 2.4e6, 1420e6, 123, header)
 
-    """
+    
     sdr = RtlSdr()
 
     sdr.sample_rate = 2.4e6
@@ -103,7 +103,7 @@ for idx in range(len(sky_galactic[:, 0])):
 
     R.status()
     print("Measuring data...")
-    """
+    
 
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
 
