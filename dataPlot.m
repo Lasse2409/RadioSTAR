@@ -1,20 +1,26 @@
 %% plot data
 clear;
 
-data = readtable("data/data-0.dat");
-    
-ps = table2array(data(:, 1));
-freq = table2array(data(:, 2));
-
 figure(1);
 clf;
 hold on;
-plot(freq, ps);
+
+for i = 0:399
+    data = readtable("data/data-" + i + ".dat");
+    
+    ps = table2array(data(:, 1));
+    freq = table2array(data(:, 2));
+    
+    %figure(1);
+    %clf;
+    %hold on;
+    plot(freq, ps);
+end
 
 %% plot map
 clear;
 
-N = 4;
+N = 20;
 
 map = zeros(N, N);
 
@@ -22,9 +28,9 @@ for i = 1:N
     for j = 1:N
 
         if mod(i, 2) == 0 
-            k = i*N - j + 1
+            k = i*N - j + 1;
         else
-            k = (i-1)*N + j
+            k = (i-1)*N + j;
         end
 
         data = readtable("data/data-" + (k-1) + ".dat");
