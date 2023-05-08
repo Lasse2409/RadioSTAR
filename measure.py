@@ -33,7 +33,7 @@ def measurements(coordinate, target):
     
     return measured_horizontal, measured_galactic, measured_equatorial
 
-def rtlSample(samples, sampleRate, centerFreq, gain, idx):
+def rtlSample(samples, sampleRate, centerFreq, gain, dataFileExtension):
     sdr = RtlSdr()
 
     sdr.sample_rate = sampleRate
@@ -43,7 +43,7 @@ def rtlSample(samples, sampleRate, centerFreq, gain, idx):
     samples = sdr.read_samples(samples)
     sdr.close()
 
-    f = open("data/single/singleData-" + str(idx) + ".dat", "w")
+    f = open("data/single/singleData-" + str(dataFileExtension) + ".dat", "w")
     
     f.write("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
     f.write("#Latitude: " + str(lat))
