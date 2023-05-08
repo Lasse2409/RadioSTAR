@@ -65,9 +65,4 @@ class utilities:
     def psd():
         print('not finished function')
     
-    def test(header, dataFileExtension):
-        f = open("data-" + str(dataFileExtension) + ".dat", "w")
-        
-        #makes header an input in function 
-        f.write(str(header))
-        f.close()
+ 
