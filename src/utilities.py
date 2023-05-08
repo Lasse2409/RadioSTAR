@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
-
+from rtlsdr import *
+from datetime import datetime
 
 class utilities:
 
@@ -33,7 +33,7 @@ class utilities:
         samples = sdr.read_samples(samples)
         sdr.close()
 
-        f = open("data/single/singleData-" + str(dataFileExtension) + ".dat", "w")
+        f = open("data/2data-" + str(dataFileExtension) + ".dat", "w")
         
         f.write("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
         f.write("#Latitude: " + str(lat))
