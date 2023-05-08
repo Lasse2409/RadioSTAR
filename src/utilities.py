@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from rtlsdr import *
 
 
 
@@ -23,7 +24,7 @@ class utilities:
         return sky_horizontal
     
         
-    def rtlSample(samples, sampleRate, centerFreq, gain, dataFileExtension):
+    def rtlSample(samples, sampleRate, centerFreq, gain, dataFileExtension, header):
         sdr = RtlSdr()
 
         sdr.sample_rate = sampleRate
@@ -35,6 +36,11 @@ class utilities:
 
         f = open("data/single/singleData-" + str(dataFileExtension) + ".dat", "w")
         
+        for idx in range(len(header)):
+            f.write(header[idx])
+
+        """
+        #makes header an input in function 
         f.write("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
         f.write("#Latitude: " + str(lat))
         f.write("#Longitude: " + str(lon))
@@ -45,7 +51,7 @@ class utilities:
         f.write("#Galactic longitude: " + str(measured_galactic[idx, 1]) + "\n")
         f.write("#RA: " + str(measured_equatorial[idx, 0]) + "\n")
         f.write("#Dec: " + str(measured_equatorial[idx, 1]) + "\n")
-
+        """
         ps, freqs = psd(samples, NFFT=256, Fs=sdr.sample_rate/1e6, Fc=sdr.center_freq/1e6)
 
         for j in range(len(ps)):
@@ -58,3 +64,10 @@ class utilities:
 
     def psd():
         print('not finished function')
+    
+    def test(header, dataFileExtension):
+        f = open("data-" + str(dataFileExtension) + ".dat", "w")
+        
+        #makes header an input in function 
+        f.write(str(header))
+        f.close()
