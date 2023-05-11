@@ -31,7 +31,8 @@ def measurements(coordinate, target):
     else:
         print('wrong coordinate sys')
         exit()
-
+    
+    return measured_horizontal, measured_galactic, measured_equatorial
 
 
 
