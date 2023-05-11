@@ -107,9 +107,6 @@ R.set(target[0] - azOffset, target[1] - elOffset)
 
 utilities.rtlSample(256*1024*4, 2.4e6, 1420e6, 49.6, filePathName, idx, header)
 
-
-
-
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
 
 print("Done!")
