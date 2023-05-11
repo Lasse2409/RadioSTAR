@@ -38,19 +38,8 @@ def measurements(coordinate, target):
 
 
 
-#azOffset = 222.8
-#elOffset = 1
-
-azOffset = 0
-elOffset  = 0
-
-coordinate = 0 #0-> horizontal, 1-> galactic, 2-> equatorial
-target = np.array([220,50])
-
-measured_horizontal = np.zeros(np.shape(target))
-measured_equatorial = np.zeros(np.shape(target))
-measured_galactic = np.zeros(np.shape(target))
-
+azOffset = 222.8
+elOffset = 1
 
 alt = 17.
 lat = 55.367511
@@ -66,17 +55,22 @@ second = 0
 filePathName = "data/single/singleData-"
 
 
+
+
+
+coordinate = 1 #0-> horizontal, 1-> galactic(longitude,latitude), 2-> equatorial
+target = np.array([124,27])
+
+measured_horizontal = np.zeros(np.shape(target))
+measured_equatorial = np.zeros(np.shape(target))
+measured_galactic = np.zeros(np.shape(target))
+
 R = rotor("192.168.1.104", 23)
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
 
 
-
-
-print("Going to: (" + str(target[0]) + ", " + str(target[1]) + ")")
-R.set(target[0] - azOffset, target[1] - elOffset)
-
-
 measured_horizontal, measured_galactic, measured_equatorial = measurements(coordinate, target)
+
 
 header = []
 header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
@@ -89,6 +83,15 @@ header.append("#Galactic latitude: " + str(measured_galactic[0]) + "\n")
 header.append("#Galactic longitude: " + str(measured_galactic[1]) + "\n")
 header.append("#RA: " + str(measured_equatorial[0]) + "\n")
 header.append("#Dec: " + str(measured_equatorial[1]) + "\n")
+
+if measured_horizontal[1] < 10:
+    print('Tool low elevation (<10)')
+    os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
+    exit()
+
+print("Going to: (" + str(measured_horizontal[0]) + ", " + str(measured_horizontal[1]) + ")")
+R.set(measured_horizontal[0] - azOffset, measured_horizontal[1] + elOffset)
+
 
 
 
