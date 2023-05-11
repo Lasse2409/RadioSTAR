@@ -105,7 +105,11 @@ os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
 print("Going to: (" + str(target[0]) + ", " + str(target[1]) + ")")
 R.set(target[0] - azOffset, target[1] - elOffset)
 
+<<<<<<< HEAD
 rtlSample(256*1024*4, 2.4e6, 1420e6, 49.6, filePathName, idx, header)
+=======
+utilities.rtlSample(256*1024*4, 2.4e6, 1420e6, 49.6, filePathNAme, idx, header)
+>>>>>>> 050854f3f36b55b1def90ff274214e0780edf001
 
 
 
