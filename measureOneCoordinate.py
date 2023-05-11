@@ -88,14 +88,14 @@ header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "
 header.append("#Latitude: " + str(lat) + "\n")
 header.append("#Longitude: " + str(lon) + "\n")
 header.append("#Altitude: " + str(alt) + "\n")
-header.append("#Az: " + str(measured_horizontal[idx, 0]) + "\n")
-header.append("#El: " + str(measured_horizontal[idx, 1]) + "\n")
+header.append("#Az: " + str(target[0]) + "\n")
+header.append("#El: " + str(target[1]) + "\n")
 #header.append("#Galactic latitude: " + str(measured_galactic[idx, 0]) + "\n")
 #header.append("#Galactic longitude: " + str(measured_galactic[idx, 1]) + "\n")
 #header.append("#RA: " + str(measured_equatorial[idx, 0]) + "\n")
 #header.append("#Dec: " + str(measured_equatorial[idx, 1]) + "\n")
 
-
+idx = 1
 
 R = rotor("192.168.1.104", 23)
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
