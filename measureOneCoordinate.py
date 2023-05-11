@@ -53,8 +53,7 @@ def rtlSample(samples, sampleRate, centerFreq, gain, filePathName, dataFileExten
 
         f.close()
 
-        R.status()
-        print("Measuring data...")
+
 
 
 
@@ -106,6 +105,9 @@ print("Going to: (" + str(target[0]) + ", " + str(target[1]) + ")")
 R.set(target[0] - azOffset, target[1] - elOffset)
 
 utilities.rtlSample(256*1024*4, 2.4e6, 1420e6, 49.6, filePathName, idx, header)
+
+R.status()
+print("Measuring data...")
 
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
 

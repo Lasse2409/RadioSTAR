@@ -47,8 +47,6 @@ class utilities:
 
         f.close()
 
-        R.status()
-        print("Measuring data...")
 
     def psd():
         print('not finished function')
