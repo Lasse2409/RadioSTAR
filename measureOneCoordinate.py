@@ -52,9 +52,7 @@ hour = 16
 minute = 0
 second = 0
 
-filePathName = "data/single/singleData-"
-
-
+samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension = 256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/singleData-", 1
 
 
 
@@ -83,6 +81,10 @@ header.append("#Galactic latitude: " + str(measured_galactic[0]) + "\n")
 header.append("#Galactic longitude: " + str(measured_galactic[1]) + "\n")
 header.append("#RA: " + str(measured_equatorial[0]) + "\n")
 header.append("#Dec: " + str(measured_equatorial[1]) + "\n")
+header.append("#rtl_samples: " + str(samples) + "\n")
+header.append("#rtl_sampleRate: " + str(sampleRate) + "\n")
+header.append("#rtl_centerFreq: " + str(centerFreq) + "\n")
+header.append("#rtl_gain: " + str(gain) + "\n")
 
 if measured_horizontal[1] < 10:
     print('Tool low elevation (<10)')
@@ -96,7 +98,7 @@ R.set(measured_horizontal[0] - azOffset, measured_horizontal[1] + elOffset)
 
 
 
-utilities.rtlSample(256*1024*31, 2.4e6, 1420e6, 49.6, filePathName, 1, header) #max samples is 256*1024*31
+utilities.rtlSample(samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header) #max samples is 256*1024*31
 
 R.status()
 print("Measuring data...")
