@@ -96,7 +96,7 @@ R.set(measured_horizontal[0] - azOffset, measured_horizontal[1] + elOffset)
 
 
 
-utilities.rtlSample(256*1024*4, 2.4e6, 1420e6, 49.6, filePathName, 1, header)
+utilities.rtlSample(256*1024*31, 2.4e6, 1420e6, 49.6, filePathName, 1, header) #max samples is 256*1024*31
 
 R.status()
 print("Measuring data...")
