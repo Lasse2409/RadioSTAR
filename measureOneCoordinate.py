@@ -44,7 +44,7 @@ azOffset = 0
 elOffset  = 0
 
 coordinate = 0 #0-> horizontal, 1-> galactic, 2-> equatorial
-target = np.array([[220,50]])
+target = np.array([220,50])
 
 measured_horizontal = np.zeros(np.shape(target))
 measured_equatorial = np.zeros(np.shape(target))
