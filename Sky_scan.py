@@ -20,12 +20,12 @@ from src.utilities import utilities
 azOffset = 0
 elOffset  = 0
 
-N = 20
-az_start = 160
-az_stop = 250
+N = 10
+az_start = 210
+az_stop = 220
 
-el_start = 10
-el_stop = 50
+el_start = 70
+el_stop = 80
 
 alt = 17.
 lat = 55.367511
@@ -53,6 +53,9 @@ for idx in range(len(sky_galactic[:, 0])):
     sky_horizontal_measured[idx, :] = np.transpose(coordinates.Galactic_to_horizontal(year, month, day, hour, minute, second, lat, lon, alt, sky_galactic[idx,0], sky_galactic[idx,1], now = True))
     print("Going to: (" + str(sky_horizontal_measured[idx, 0]) + ", " + str(sky_horizontal_measured[idx, 1]) + ")")
     R.set(sky_horizontal_measured[idx, 0] - azOffset, sky_horizontal_measured[idx, 1] - elOffset)
+    
+    #utilities.rtlSample(256*1024*4, 2.4e6, 1420e6, 49.6, idx)
+
 
 
     header = []
@@ -79,7 +82,7 @@ for idx in range(len(sky_galactic[:, 0])):
     samples = sdr.read_samples(256*1024*4)
     sdr.close()
 
-    f = open("data/data-" + str(idx) + ".dat", "w")
+    f = open("data/1data-" + str(idx) + ".dat", "w")
     f.write("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
     f.write("#Latitude: " + str(lat) + "\n")
     f.write("#Longitude: " + str(lon) + "\n")
