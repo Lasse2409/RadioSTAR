@@ -24,7 +24,7 @@ def measurementCoordinates(targetCoordinateSystem, target):
     measuredCoordinateGalactic = np.zeros(np.shape(target))
  
     if targetCoordinateSystem == 0:
-        measuredCoordinateHorizontal = np.asarraay(target)
+        measuredCoordinateHorizontal = np.asarray(target)
         measuredCoordinateGalactic = np.transpose(coordinates.Horizontal_to_galactic(dateAndTime, observer, target[0], target[1], now = True))
         measuredCoordinateEquatorial = np.transpose(coordinates.Horizontal_to_equatorial(dateAndTime, observer, target[0], target[1], now = True))
         
