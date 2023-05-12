@@ -35,15 +35,12 @@ def measurements(coordinate, target):
     return measured_horizontal, measured_galactic, measured_equatorial
 
 
-
-
-
 azOffset = 222.8
 elOffset = 1
 
-alt = 17.
-lat = 55.367511
-lon = 10.431889
+alt = 17
+lat = 55.3959
+lon = 10.3883
 
 year = 2023
 month = 5
@@ -51,6 +48,7 @@ day = 1
 hour = 16
 minute = 0
 second = 0
+
 
 samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension = 256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/singleData-", 1
 
