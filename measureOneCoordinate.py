@@ -51,7 +51,7 @@ def measurementCoordinates(targetCoordinateSystem, target):
 azElOffset = [231.4, -1] #offset for Az and El calibration 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
 dateAndTime = [2023, 5, 1, 16, 0, 0] #defining date and time [year, month, day, hour, minute, second]
-rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/singleData-", 1] #defining data collection parameters for rtlSDR [samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension]
+rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/singleData-", 1] #defining data collection parameters for rtlSDR [samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension] 
 
 
 ### Defining coordinates to be tracked
@@ -72,25 +72,25 @@ measuredCoordinateEquatorial = measurementCoordinates(targetCoordinateSystem, ta
 ### Create header for data file (time, coordinates and sdr settings)
 header = []
 header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
-header.append("#Latitude: " + str(lat) + "\n")
-header.append("#Longitude: " + str(lon) + "\n")
-header.append("#Altitude: " + str(alt) + "\n")
+header.append("#Latitude: " + str(observer[0]) + "\n")
+header.append("#Longitude: " + str(observer[1]) + "\n")
+header.append("#Altitude: " + str(observer[2]) + "\n")
 header.append("#Az: " + str(measuredCoordinateHorizontal[0]) + "\n")
 header.append("#El: " + str(measuredCoordinateHorizontal[1]) + "\n")
 header.append("#Galactic latitude: " + str(measuredCoordinateGalactic[0]) + "\n")
 header.append("#Galactic longitude: " + str(measuredCoordinateGalactic[1]) + "\n")
 header.append("#RA: " + str(measuredCoordinateEquatorial[0]) + "\n")
 header.append("#Dec: " + str(measuredCoordinateEquatorial[1]) + "\n")
-header.append("#rtl_samples: " + str(samples) + "\n")
-header.append("#rtl_sampleRate: " + str(sampleRate) + "\n")
-header.append("#rtl_centerFreq: " + str(centerFreq) + "\n")
-header.append("#rtl_gain: " + str(gain) + "\n")
+header.append("#rtl_samples: " + str(rtlSDRSetup[0]) + "\n")
+header.append("#rtl_sampleRate: " + str(rtlSDRSetup[1]) + "\n")
+header.append("#rtl_centerFreq: " + str(rtlSDRSetup[2]) + "\n")
+header.append("#rtl_gain: " + str(rtlSDRSetup[3]) + "\n")
 
 
 
 ### Make sure that we dont go below elevation limit
 if measuredCoordinateHorizontal[1] < 0:
-    print('Tool low elevation (<10)')
+    print('Tool low elevation (<0)')
     os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
     exit()
 
@@ -98,11 +98,11 @@ if measuredCoordinateHorizontal[1] < 0:
 
 ### Go to target 
 print("Going to: (" + str(measuredCoordinateHorizontal[0]) + ", " + str(measuredCoordinateHorizontal[1]) + ")")
-R.set(measuredCoordinateHorizontal[0] + azOffset, measuredCoordinateHorizontal[1] + elOffset)
+R.set(measuredCoordinateHorizontal[0] + azElOffset[0], measuredCoordinateHorizontal[1] + azElOffset[1])
 
 
 ### Collect data
-utilities.rtlSample(samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header) #max samples is 256*1024*31
+utilities.rtlSample(rtlSDRSetup, header) #samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header) #max samples is 256*1024*31
 
 
 ### Get coordinate status, turn pff bias tee and finish
