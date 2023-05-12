@@ -35,8 +35,8 @@ def measurements(coordinate, target):
     return measured_horizontal, measured_galactic, measured_equatorial
 
 
-azOffset = 222.8
-elOffset = 1
+azOffset = 231.4
+elOffset = -1
 
 alt = 17
 lat = 55.3959
@@ -54,8 +54,8 @@ samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension = 256*102
 
 
 
-coordinate = 1 #0-> horizontal, 1-> galactic(longitude,latitude), 2-> equatorial
-target = np.array([124,27])
+coordinate = 0 #0-> horizontal, 1-> galactic(longitude,latitude), 2-> equatorial
+target = np.array([0 + 0/60, 90 + 0/60])
 
 measured_horizontal = np.zeros(np.shape(target))
 measured_equatorial = np.zeros(np.shape(target))
@@ -84,13 +84,13 @@ header.append("#rtl_sampleRate: " + str(sampleRate) + "\n")
 header.append("#rtl_centerFreq: " + str(centerFreq) + "\n")
 header.append("#rtl_gain: " + str(gain) + "\n")
 
-if measured_horizontal[1] < 10:
+if measured_horizontal[1] < 0:
     print('Tool low elevation (<10)')
     os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
     exit()
 
 print("Going to: (" + str(measured_horizontal[0]) + ", " + str(measured_horizontal[1]) + ")")
-R.set(measured_horizontal[0] - azOffset, measured_horizontal[1] + elOffset)
+R.set(measured_horizontal[0] + azOffset, measured_horizontal[1] + elOffset)
 
 
 
