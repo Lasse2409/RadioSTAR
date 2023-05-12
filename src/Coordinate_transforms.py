@@ -43,28 +43,28 @@ class coordinates:
         return c_equatorial.ra.degree, c_equatorial.dec.degree
 
 
-    def Equatorial_to_horizontal(year, month, day, hour, minute, second, LAT, LON, ALT, RA, DEC, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and equitorial coordinates
-        observer = EarthLocation.from_geodetic(lat=LAT*u.deg, lon=LON*u.deg, height=ALT*u.m) #Location converted to cartesian coordinates
+    def Equatorial_to_horizontal(dateAndTime, observer, RA, DEC, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and equitorial coordinates
+        observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m) #Location converted to cartesian coordinates
         
         if now == True:
            time = datetime.utcnow()
         else:    
-            time = str(year) + '-' + str(month) + '-' + str(day) + ' ' + str(hour) + ':' + str(minute) + ':' + str(second)
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
         time = Time(str(time)) 
         
         c_icrs = SkyCoord(ra=RA*u.degree, dec=DEC*u.degree, frame='icrs') #International Celestial Reference System (ICRS) 
         c_horizontal = c_icrs.transform_to(AltAz(obstime=time,location=observer))
         
-        return c_horizontal.az.degree, c_horizontal.alt.degree
+        return c_horizontal.az.degree, c_horizontal.observer[2].degree
 
 
-    def Horizontal_to_equatorial(year, month, day, hour, minute, second, LAT, LON, ALT, AZ, EL, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and horizontal coordinates
-        observer = EarthLocation.from_geodetic(lat=LAT*u.deg, lon=LON*u.deg, height=ALT*u.m) 
+    def Horizontal_to_equatorial(dateAndTime, observer, AZ, EL, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and horizontal coordinates
+        observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m) 
         
         if now == True:
            time = datetime.utcnow()
         else:    
-            time = str(year) + '-' + str(month) + '-' + str(day) + ' ' + str(hour) + ':' + str(minute) + ':' + str(second)
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
         time = Time(str(time))
         
         c_horizontal = SkyCoord(alt=EL*u.degree, az=AZ*u.degree, frame='altaz', obstime=time, location=observer)
@@ -73,13 +73,13 @@ class coordinates:
         return c_equatorial.ra.degree, c_equatorial.dec.degree
 
 
-    def Galactic_to_horizontal(year, month, day, hour, minute, second, LAT,  LON, ALT, L, B, now=True):  #Time (manually or now=True gives current time) gps coordinates, altitude and galactic coordinates coordinates
-        observer = EarthLocation.from_geodetic(lat=LAT*u.deg, lon=LON*u.deg, height=ALT*u.m) 
+    def Galactic_to_horizontal(dateAndTime, observer, L, B, now=True):  #Time (manually or now=True gives current time) gps coordinates, altitude and galactic coordinates coordinates
+        observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m) 
         
         if now == True:
            time = datetime.utcnow()
         else:    
-            time = str(year) + '-' + str(month) + '-' + str(day) + ' ' + str(hour) + ':' + str(minute) + ':' + str(second)
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
         time = Time(str(time))
 
         c_galactic = SkyCoord(frame="galactic", l=L*u.degree, b=B*u.degree)
@@ -88,13 +88,13 @@ class coordinates:
         return c_horizontal.az.degree, c_horizontal.alt.degree
 
 
-    def Horizontal_to_galactic(year, month, day, hour, minute, second, LAT, LON, ALT, AZ, EL, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and horizontal coordinates
-        observer = EarthLocation.from_geodetic(lat=LAT*u.deg, lon=LON*u.deg, height=ALT*u.m) 
+    def Horizontal_to_galactic(dateAndTime, observer, AZ, EL, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and horizontal coordinates
+        observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m) 
         
         if now == True:
            time = datetime.utcnow()
         else:    
-            time = str(year) + '-' + str(month) + '-' + str(day) + ' ' + str(hour) + ':' + str(minute) + ':' + str(second)
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
         time = Time(str(time))
 
         c_horizontal = SkyCoord(alt=EL*u.degree, az=AZ*u.degree, frame='altaz', obstime=time, location=observer)

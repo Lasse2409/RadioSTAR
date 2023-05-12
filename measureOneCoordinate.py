@@ -25,16 +25,16 @@ def measurementCoordinates(targetCoordinateSystem, target):
  
     if targetCoordinateSystem == 0:
         measuredCoordinateHorizontal = np.asarraay(target)
-        measuredCoordinateGalactic = np.transpose(coordinates.Horizontal_to_galactic(year, month, day, hour, minute, second, lat, lon, alt, target[0], target[1], now = True))
-        measuredCoordinateEquatorial = np.transpose(coordinates.Horizontal_to_equatorial(year, month, day, hour, minute, second, lat, lon, alt, target[0], target[1], now = True))
+        measuredCoordinateGalactic = np.transpose(coordinates.Horizontal_to_galactic(dateAndTime, observer, target[0], target[1], now = True))
+        measuredCoordinateEquatorial = np.transpose(coordinates.Horizontal_to_equatorial(dateAndTime, observer, target[0], target[1], now = True))
         
     elif targetCoordinateSystem == 1:
-        measuredCoordinateHorizontal = np.transpose(coordinates.Galactic_to_horizontal(year, month, day, hour, minute, second, lat, lon, alt, target[0], target[1], now = True))
+        measuredCoordinateHorizontal = np.transpose(coordinates.Galactic_to_horizontal(dateAndTime, observer, target[0], target[1], now = True))
         measuredCoordinateGalactic = np.asarray(target)
         measuredCoordinateEquatorial = np.transpose(coordinates.Galactic_to_equatorial(target[0], target[1]))
     
     elif targetCoordinateSystem == 2:
-        measuredCoordinateHorizontal = np.transpose(coordinates.Equatorial_to_horizontal(year, month, day, hour, minute, second, lat, lon, alt, target[0], target[1], now = True))
+        measuredCoordinateHorizontal = np.transpose(coordinates.Equatorial_to_horizontal(dateAndTime, observer, target[0], target[1], now = True))
         measuredCoordinateGalactic = np.transpose(coordinates.Equatorial_to_galactic(target[0], target[1]))
         measuredCoordinateEquatorial = np.asarray(target)
     
@@ -49,7 +49,7 @@ def measurementCoordinates(targetCoordinateSystem, target):
 
 ### Global setup
 azElOffset = [231.4, -1] #offset for Az and El calibration 
-observer = [17, 55.3959, 10.3883] #define location of observer [altitude, latitude, longitude]
+observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
 dateAndTime = [2023, 5, 1, 16, 0, 0] #defining date and time [year, month, day, hour, minute, second]
 rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/singleData-", 1] #defining data collection parameters for rtlSDR [samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension]
 
