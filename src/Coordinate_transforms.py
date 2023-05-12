@@ -44,7 +44,7 @@ class coordinates:
 
 
     def Equatorial_to_horizontal(year, month, day, hour, minute, second, LAT, LON, ALT, RA, DEC, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and equitorial coordinates
-        observer = EarthLocation(lat=LAT*u.deg, lon=-LON*u.deg, height=ALT*u.m) #Location converted to cartesian coordinates
+        observer = EarthLocation.from_geodetic(lat=LAT*u.deg, lon=LON*u.deg, height=ALT*u.m) #Location converted to cartesian coordinates
         
         if now == True:
            time = datetime.utcnow()
@@ -59,7 +59,7 @@ class coordinates:
 
 
     def Horizontal_to_equatorial(year, month, day, hour, minute, second, LAT, LON, ALT, AZ, EL, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and horizontal coordinates
-        observer = EarthLocation(lat=LAT*u.deg, lon=-LON*u.deg, height=ALT*u.m) 
+        observer = EarthLocation.from_geodetic(lat=LAT*u.deg, lon=LON*u.deg, height=ALT*u.m) 
         
         if now == True:
            time = datetime.utcnow()
@@ -74,7 +74,7 @@ class coordinates:
 
 
     def Galactic_to_horizontal(year, month, day, hour, minute, second, LAT,  LON, ALT, L, B, now=True):  #Time (manually or now=True gives current time) gps coordinates, altitude and galactic coordinates coordinates
-        observer = EarthLocation(lat=LAT*u.deg, lon=-LON*u.deg, height=ALT*u.m) 
+        observer = EarthLocation.from_geodetic(lat=LAT*u.deg, lon=LON*u.deg, height=ALT*u.m) 
         
         if now == True:
            time = datetime.utcnow()
@@ -89,7 +89,7 @@ class coordinates:
 
 
     def Horizontal_to_galactic(year, month, day, hour, minute, second, LAT, LON, ALT, AZ, EL, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and horizontal coordinates
-        observer = EarthLocation(lat=LAT*u.deg, lon=-LON*u.deg, height=ALT*u.m) 
+        observer = EarthLocation.from_geodetic(lat=LAT*u.deg, lon=LON*u.deg, height=ALT*u.m) 
         
         if now == True:
            time = datetime.utcnow()
