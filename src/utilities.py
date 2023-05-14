@@ -25,17 +25,18 @@ class utilities:
         return sky_horizontal
     
         
-    def rtlSample(samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header):
+    def rtlSample(rtlSDRSetup, header): #(samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header)
         sdr = RtlSdr()
+	
+	#samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header)
+        sdr.sample_rate = rtlSDRSetup[1]
+        sdr.center_freq = rtlSDRSetup[2]
+        sdr.gain = rtlSDRSetup[3]
 
-        sdr.sample_rate = sampleRate
-        sdr.center_freq = centerFreq
-        sdr.gain = gain
-
-        samples = sdr.read_samples(samples)
+        samples = sdr.read_samples(rtlSDRSetup[0])
         sdr.close()
 
-        f = open(filePathName + str(dataFileExtension) + ".dat", "w")
+        f = open(rtlSDRSetup[4] + str(rtlSDRSetup[5]) + ".dat", "w")
         
         for idx in range(len(header)):
             f.write(header[idx])
