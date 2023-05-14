@@ -49,19 +49,19 @@ def measurementCoordinates(targetCoordinateSystem, target):
 def makeHeader():
     header = []
     header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
-    header.append("#Latitude: " + str(lat) + "\n")
-    header.append("#Longitude: " + str(lon) + "\n")
-    header.append("#Altitude: " + str(alt) + "\n")
+    header.append("#Latitude: " + str(observer[0]) + "\n")
+    header.append("#Longitude: " + str(observer[1]) + "\n")
+    header.append("#Altitude: " + str(observer[2]) + "\n")
     header.append("#Az: " + str(measuredCoordinateHorizontal[0]) + "\n")
     header.append("#El: " + str(measuredCoordinateHorizontal[1]) + "\n")
     header.append("#Galactic latitude: " + str(measuredCoordinateGalactic[0]) + "\n")
     header.append("#Galactic longitude: " + str(measuredCoordinateGalactic[1]) + "\n")
     header.append("#RA: " + str(measuredCoordinateEquatorial[0]) + "\n")
     header.append("#Dec: " + str(measuredCoordinateEquatorial[1]) + "\n")
-    header.append("#rtl_samples: " + str(samples) + "\n")
-    header.append("#rtl_sampleRate: " + str(sampleRate) + "\n")
-    header.append("#rtl_centerFreq: " + str(centerFreq) + "\n")
-    header.append("#rtl_gain: " + str(gain) + "\n")    
+    header.append("#rtl_samples: " + str(rtlSDRSetup[0]) + "\n")
+    header.append("#rtl_sampleRate: " + str(rtlSDRSetup[1]) + "\n")
+    header.append("#rtl_centerFreq: " + str(rtlSDRSetup[2]) + "\n")
+    header.append("#rtl_gain: " + str(rtlSDRSetup[3]) + "\n")    
 
 
 ### Global setup
@@ -105,7 +105,7 @@ R.set(measuredCoordinateHorizontal[0] + azElOffset[0], measuredCoordinateHorizon
 
 
 ### Collect data
-utilities.rtlSample(rtlSDRSetup, header) #samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header) #max samples is 256*1024*31
+utilities.rtlSample(rtlSDRSetup, header) #max samples is 256*1024*31
 
 
 ### Get coordinate status, turn pff bias tee and finish
