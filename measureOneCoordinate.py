@@ -62,7 +62,8 @@ def makeHeader():
     header.append("#rtl_sampleRate: " + str(rtlSDRSetup[1]) + "\n")
     header.append("#rtl_centerFreq: " + str(rtlSDRSetup[2]) + "\n")
     header.append("#rtl_gain: " + str(rtlSDRSetup[3]) + "\n")    
-
+    
+    return header
 
 ### Global setup
 azElOffset = [231.4, -1] #offset for Az and El calibration 
@@ -87,7 +88,7 @@ measuredCoordinateGalactic = measurementCoordinates(targetCoordinateSystem, targ
 measuredCoordinateEquatorial = measurementCoordinates(targetCoordinateSystem, target)[2]
 
 ### Create header for data file (time, coordinates and sdr settings)
-makeHeader()
+header = makeHeader()
 
 
 
