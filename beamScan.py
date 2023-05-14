@@ -87,9 +87,9 @@ for idx in range(numMeasurements):
 
 
     ### Store the measured coordinates in all coordinate systems (horizontal, galactic and equatorial)
-    measuredCoordinateHorizontal = measurementCoordinates(targetCoordinateSystem, target)[0]
-    measuredCoordinateGalactic = measurementCoordinates(targetCoordinateSystem, target)[1]
-    measuredCoordinateEquatorial = measurementCoordinates(targetCoordinateSystem, target)[2]
+    measuredCoordinateHorizontal = measurementCoordinates(0, target)[0]
+    measuredCoordinateGalactic = measurementCoordinates(0, target)[1]
+    measuredCoordinateEquatorial = measurementCoordinates(0, target)[2]
 
     ### Make sure that we dont go below elevation limit
     if measuredCoordinateHorizontal[1] < 0:
