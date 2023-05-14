@@ -44,8 +44,7 @@ def measurementCoordinates(targetCoordinateSystem, target):
     
     return measuredCoordinateHorizontal, measuredCoordinateGalactic, measuredCoordinateEquatorial
 
-
-
+### Function that returns a list with all header content
 def makeHeader():
     header = []
     header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
@@ -74,7 +73,7 @@ rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/singleData-", 1] #
 
 ### Defining coordinates to be tracked
 targetCoordinateSystem = 0 #declaring which coordinate system is used in taget coordinates (0-> horizontal, 1-> galactic(longitude,latitude), 2-> equatorial)
-target = np.array([0 + 0/60, 90 + 0/60]) #setting target coordinates 
+target = np.array([180 + 0/60, 80 + 0/60]) #setting target coordinates 
 
 
 ### Initializeing seriel connection to rotor and turning on bias tee
@@ -88,7 +87,7 @@ measuredCoordinateGalactic = measurementCoordinates(targetCoordinateSystem, targ
 measuredCoordinateEquatorial = measurementCoordinates(targetCoordinateSystem, target)[2]
 
 ### Create header for data file (time, coordinates and sdr settings)
-header = makeHeader()
+header = utilitites.makeHeader()
 
 
 
@@ -102,7 +101,13 @@ if measuredCoordinateHorizontal[1] < 0:
 
 ### Go to target 
 print("Going to: (" + str(measuredCoordinateHorizontal[0]) + ", " + str(measuredCoordinateHorizontal[1]) + ")")
-R.set(measuredCoordinateHorizontal[0] + azElOffset[0], measuredCoordinateHorizontal[1] + azElOffset[1])
+
+if measuredCoordinateHorizontal[0] > 180:
+    setAz = -(360-measuredCoordinateHorizontal[0])
+else:
+    setAz = measuredCoordinateHorizontal[0]
+
+R.set(setAz + azElOffset[0], measuredCoordinateHorizontal[1] + azElOffset[1])
 
 
 ### Collect data
