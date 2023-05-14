@@ -99,7 +99,7 @@ if measuredCoordinateHorizontal[1] < 0:
 
 
 
-### Go to target 
+### Go to target this one we want to loop over and repeatedly update while data is being collected
 print("Going to: (" + str(measuredCoordinateHorizontal[0]) + ", " + str(measuredCoordinateHorizontal[1]) + ")")
 
 if measuredCoordinateHorizontal[0] > 180:
@@ -110,7 +110,8 @@ else:
 R.set(setAz + azElOffset[0], measuredCoordinateHorizontal[1] + azElOffset[1])
 
 
-### Collect data
+
+### Collect data run all the time, the slow one governing how long to loop the tracking
 utilities.rtlSample(rtlSDRSetup, header) #max samples is 256*1024*31
 
 

@@ -69,6 +69,7 @@ class rotor:
             time.sleep(0.5)
 
             self.statusInt()
+            self.status()
 
 
     def stop(self):
@@ -87,6 +88,7 @@ class rotor:
     def status(self):
         self.statusInt()
         print("Az = " + str(self.az) + ", El = " + str(self.el)) # + ", PH = " + str(self.PH) + ", PV = " + str(self.PV)
+        return self.az, self.el
 
     def disconnect(self):
         self.client.close()

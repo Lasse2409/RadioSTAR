@@ -29,7 +29,7 @@ class utilities:
     def rtlSample(rtlSDRSetup, header): #(samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header)
         sdr = RtlSdr()
 	
-	#samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header)
+	    #samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension, header)
         sdr.sample_rate = rtlSDRSetup[1]
         sdr.center_freq = rtlSDRSetup[2]
         sdr.gain = rtlSDRSetup[3]
@@ -48,27 +48,6 @@ class utilities:
             f.write(str(ps[j]) + ", " + str(freqs[j]) + "\n")
 
         f.close()
-
-
-    ### Function that returns a list with all header content
-    def makeHeader():
-        header = []
-#        header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
-        header.append("#Latitude: " + str(observer[0]) + "\n")
-        header.append("#Longitude: " + str(observer[1]) + "\n")
-        header.append("#Altitude: " + str(observer[2]) + "\n")
-        header.append("#Az: " + str(measuredCoordinateHorizontal[0]) + "\n")
-        header.append("#El: " + str(measuredCoordinateHorizontal[1]) + "\n")
-        header.append("#Galactic latitude: " + str(measuredCoordinateGalactic[0]) + "\n")
-        header.append("#Galactic longitude: " + str(measuredCoordinateGalactic[1]) + "\n")
-        header.append("#RA: " + str(measuredCoordinateEquatorial[0]) + "\n")
-        header.append("#Dec: " + str(measuredCoordinateEquatorial[1]) + "\n")
-        header.append("#rtl_samples: " + str(rtlSDRSetup[0]) + "\n")
-        header.append("#rtl_sampleRate: " + str(rtlSDRSetup[1]) + "\n")
-        header.append("#rtl_centerFreq: " + str(rtlSDRSetup[2]) + "\n")
-        header.append("#rtl_gain: " + str(rtlSDRSetup[3]) + "\n")    
-        
-        return header
 
     def psd():
         print('not finished function')
