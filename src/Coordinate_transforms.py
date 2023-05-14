@@ -8,6 +8,8 @@
 
 from astropy import units as u
 from astropy.coordinates import AltAz, EarthLocation, SkyCoord
+from astropy.coordinates import get_sun
+from astropy.coordinates import get_moon
 from astropy.time import Time
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -55,7 +57,7 @@ class coordinates:
         c_icrs = SkyCoord(ra=RA*u.degree, dec=DEC*u.degree, frame='icrs') #International Celestial Reference System (ICRS) 
         c_horizontal = c_icrs.transform_to(AltAz(obstime=time,location=observer))
         
-        return c_horizontal.az.degree, c_horizontal.observer[2].degree
+        return c_horizontal.az.degree, c_horizontal.alt.degree
 
 
     def Horizontal_to_equatorial(dateAndTime, observer, AZ, EL, now=True): #Time (manually or now=True gives current time) gps coordinates, altitude and horizontal coordinates
@@ -101,3 +103,21 @@ class coordinates:
         c_galactic = c_horizontal.galactic
 
         return c_galactic.l.degree, c_galactic.b.degree
+
+    
+    def getSun(dateAndTime, observer, now=True):
+        # Define the location on Earth (latitude, longitude, elevation in meters)
+        observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m)
+
+        # Define the time, either now or given in dateAndTime list
+        if now == True:
+            time = datetime.utcnow()
+        else:    
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
+        time = Time(str(time)) 
+
+        # Get the Sun's position in Altitude-Azimuth coordinates at the current time and location
+        sunAzEl = get_sun(time).transform_to(AltAz(obstime=time, location=observer))
+        print(sunAzEl)
+        # Return the az end el of sun position 
+        return sunAzEl.az.degree, sunAzEl.alt.degree

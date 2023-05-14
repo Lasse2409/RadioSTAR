@@ -49,6 +49,26 @@ class utilities:
 
         f.close()
 
+
+    def getSun(dateAndTime, observer, now=True):
+        # Define the location on Earth (latitude, longitude, elevation in meters)
+        observer = EarthLocation(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m)
+
+        # Define the time, either now or given in dateAndTime list
+        if now == True:
+           time = datetime.utcnow()
+        else:    
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
+        time = Time(str(time)) 
+
+        # Get the Sun's position in Altitude-Azimuth coordinates at the current time and location
+        sunAzEl = get_moon(currentTime).transform_to(AltAz(obstime=currentTime, location=location))
+
+        # Return the az end el of sun position 
+        return sunAzEl.az.degree, sunAzEl.alt.degree
+
+
+
     def psd():
         print('not finished function')
     
