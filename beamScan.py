@@ -72,7 +72,7 @@ numMeasurements = 3
 azElOffset = [231.4, -1] #offset for Az and El calibration 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
 dateAndTime = [2023, 5, 1, 16, 0, 0] #defining date and time [year, month, day, hour, minute, second]
-rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/pointing/pointingData-", idx] #defining data collection parameters for rtlSDR [samples, sampleRate, centerFreq, gain, filePathName, dataFileExtension] 
+rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/pointing/pointingData-"] #defining data collection parameters for rtlSDR [samples, sampleRate, centerFreq, gain, filePathName] 
 
 
 ### Initializeing seriel connection to rotor and turning on bias tee
@@ -116,7 +116,7 @@ for idx in range(numMeasurements):
 
     ### Collect data 
     print("Measuring data...")
-    utilities.rtlSample(rtlSDRSetup, header) #max samples is 256*1024*31
+    utilities.rtlSample(rtlSDRSetup, idx, header) #max samples is 256*1024*31
     ### Get coordinate status, turn pff bias tee and finish
 
 
