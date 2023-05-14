@@ -82,14 +82,63 @@ os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
 
 
 
+sun = coordinates.getSun(dateAndTime, observer, now=True)
+
+print("Going to target: " + str(sun))
+
+if sun[0] > 180:
+    setAz = -(360-sun[0])
+else:
+    setAz = sun[0]
+
+R.set(setAz + azElOffset[0], sun[1] + azElOffset[1])
+R.status()
+
+
 ### scanning azimuth
 for idx in range(numMeasurements*2):
+    rtlSDRSetup[4] = "data/pointing/pointingDataAz-"
     sun = coordinates.getSun(dateAndTime, observer, now=True)
 
     ### Make target azimuth offset
-    print(idx)
     target = [(sun[0]-numMeasurements*angIncroment) + idx*angIncroment, sun[1]]
-    print(target)
+
+    ### Store the measured coordinates in all coordinate systems (horizontal, galactic and equatorial)
+    measuredCoordinateHorizontal = measurementCoordinates(0, target)[0]
+    measuredCoordinateGalactic = measurementCoordinates(0, target)[1]
+    measuredCoordinateEquatorial = measurementCoordinates(0, target)[2]
+
+    ### Make sure that we dont go below elevation limit
+    if measuredCoordinateHorizontal[1] < 0:
+        print('Tool low elevation (<0)')
+        os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
+        exit()
+
+
+    ### Create header for data file (time, coordinates and sdr settings)
+    header = makeHeader()
+
+    ### Go to target this one we want to loop over and repeatedly update while data is being collected
+    print("Going to: (" + str(measuredCoordinateHorizontal[0]) + ", " + str(measuredCoordinateHorizontal[1]) + ")")
+
+    if measuredCoordinateHorizontal[0] > 180:
+        setAz = -(360-measuredCoordinateHorizontal[0])
+    else:
+        setAz = measuredCoordinateHorizontal[0]
+
+    R.set(setAz + azElOffset[0], measuredCoordinateHorizontal[1] + azElOffset[1])
+    R.status()
+
+
+
+
+### scanning azimuth
+for idx in range(numMeasurements*2):
+    rtlSDRSetup[4] = "data/pointing/pointingDataEl-"
+    sun = coordinates.getSun(dateAndTime, observer, now=True)
+
+    ### Make target azimuth offset
+    target = [sun[1], (sun[1]-numMeasurements*angIncroment) + idx*angIncroment]
 
     ### Store the measured coordinates in all coordinate systems (horizontal, galactic and equatorial)
     measuredCoordinateHorizontal = measurementCoordinates(0, target)[0]
@@ -122,9 +171,13 @@ for idx in range(numMeasurements*2):
     ### Collect data 
     print("Measuring data...")
     utilities.rtlSample(rtlSDRSetup, idx, header) #max samples is 256*1024*31
-    ### Get coordinate status, turn pff bias tee and finish
 
 
+
+
+
+
+R.status()
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
 print("Done!")
 

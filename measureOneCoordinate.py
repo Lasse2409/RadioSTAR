@@ -117,7 +117,6 @@ utilities.rtlSample(rtlSDRSetup, 1, header) #max samples is 256*1024*31
 
 ### Get coordinate status, turn pff bias tee and finish
 R.status()
-print("Measuring data...")
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
 print("Done!")
 
