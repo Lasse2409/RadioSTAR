@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from datetime import datetime
 from rtlsdr import *
 from pylab import *
 
@@ -52,7 +53,7 @@ class utilities:
     ### Function that returns a list with all header content
     def makeHeader():
         header = []
-        header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
+#        header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
         header.append("#Latitude: " + str(observer[0]) + "\n")
         header.append("#Longitude: " + str(observer[1]) + "\n")
         header.append("#Altitude: " + str(observer[2]) + "\n")

@@ -73,7 +73,7 @@ rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/singleData-", 1] #
 
 ### Defining coordinates to be tracked
 targetCoordinateSystem = 0 #declaring which coordinate system is used in taget coordinates (0-> horizontal, 1-> galactic(longitude,latitude), 2-> equatorial)
-target = np.array([180 + 0/60, 80 + 0/60]) #setting target coordinates 
+target = np.array([270 + 0/60, 80 + 0/60]) #setting target coordinates 
 
 
 ### Initializeing seriel connection to rotor and turning on bias tee
@@ -87,7 +87,7 @@ measuredCoordinateGalactic = measurementCoordinates(targetCoordinateSystem, targ
 measuredCoordinateEquatorial = measurementCoordinates(targetCoordinateSystem, target)[2]
 
 ### Create header for data file (time, coordinates and sdr settings)
-header = utilitites.makeHeader()
+header = makeHeader()
 
 
 
