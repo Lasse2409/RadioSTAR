@@ -69,6 +69,7 @@ def makeHeader():
 
 ### Global setup
 numMeasurements = 3
+angIncroment = 1
 azElOffset = [231.4, -1] #offset for Az and El calibration 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
 dateAndTime = [2023, 5, 1, 16, 0, 0] #defining date and time [year, month, day, hour, minute, second]
@@ -80,11 +81,15 @@ R = rotor("192.168.1.104", 23)
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
 
 
-for idx in range(numMeasurements):
-    target = coordinates.getSun(dateAndTime, observer, now=True)
 
-    ### Make target offset
+### scanning azimuth
+for idx in range(numMeasurements*2):
+    sun = coordinates.getSun(dateAndTime, observer, now=True)
 
+    ### Make target azimuth offset
+    print(idx)
+    target = [(sun[0]-numMeasurements*angIncroment) + idx*angIncroment, sun[1]]
+    print(target)
 
     ### Store the measured coordinates in all coordinate systems (horizontal, galactic and equatorial)
     measuredCoordinateHorizontal = measurementCoordinates(0, target)[0]
