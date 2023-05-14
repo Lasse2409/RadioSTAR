@@ -118,6 +118,6 @@ class coordinates:
 
         # Get the Sun's position in Altitude-Azimuth coordinates at the current time and location
         sunAzEl = get_sun(time).transform_to(AltAz(obstime=time, location=observer))
-        print(sunAzEl)
+        
         # Return the az end el of sun position 
         return sunAzEl.az.degree, sunAzEl.alt.degree

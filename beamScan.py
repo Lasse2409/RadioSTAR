@@ -81,7 +81,7 @@ os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
 
 
 for idx in range(numMeasurements):
-    sun = coordinates.getSun(dateAndTime, observer, now=True)
+    target = coordinates.getSun(dateAndTime, observer, now=True)
 
     ### Make target offset
 
