@@ -46,6 +46,23 @@ def measurementCoordinates(targetCoordinateSystem, target):
 
 
 
+def makeHeader():
+    header = []
+    header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
+    header.append("#Latitude: " + str(lat) + "\n")
+    header.append("#Longitude: " + str(lon) + "\n")
+    header.append("#Altitude: " + str(alt) + "\n")
+    header.append("#Az: " + str(measuredCoordinateHorizontal[0]) + "\n")
+    header.append("#El: " + str(measuredCoordinateHorizontal[1]) + "\n")
+    header.append("#Galactic latitude: " + str(measuredCoordinateGalactic[0]) + "\n")
+    header.append("#Galactic longitude: " + str(measuredCoordinateGalactic[1]) + "\n")
+    header.append("#RA: " + str(measuredCoordinateEquatorial[0]) + "\n")
+    header.append("#Dec: " + str(measuredCoordinateEquatorial[1]) + "\n")
+    header.append("#rtl_samples: " + str(samples) + "\n")
+    header.append("#rtl_sampleRate: " + str(sampleRate) + "\n")
+    header.append("#rtl_centerFreq: " + str(centerFreq) + "\n")
+    header.append("#rtl_gain: " + str(gain) + "\n")    
+
 
 ### Global setup
 azElOffset = [231.4, -1] #offset for Az and El calibration 
@@ -70,21 +87,7 @@ measuredCoordinateGalactic = measurementCoordinates(targetCoordinateSystem, targ
 measuredCoordinateEquatorial = measurementCoordinates(targetCoordinateSystem, target)[2]
 
 ### Create header for data file (time, coordinates and sdr settings)
-header = []
-header.append("#Local time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n")
-header.append("#Latitude: " + str(lat) + "\n")
-header.append("#Longitude: " + str(lon) + "\n")
-header.append("#Altitude: " + str(alt) + "\n")
-header.append("#Az: " + str(measuredCoordinateHorizontal[0]) + "\n")
-header.append("#El: " + str(measuredCoordinateHorizontal[1]) + "\n")
-header.append("#Galactic latitude: " + str(measuredCoordinateGalactic[0]) + "\n")
-header.append("#Galactic longitude: " + str(measuredCoordinateGalactic[1]) + "\n")
-header.append("#RA: " + str(measuredCoordinateEquatorial[0]) + "\n")
-header.append("#Dec: " + str(measuredCoordinateEquatorial[1]) + "\n")
-header.append("#rtl_samples: " + str(samples) + "\n")
-header.append("#rtl_sampleRate: " + str(sampleRate) + "\n")
-header.append("#rtl_centerFreq: " + str(centerFreq) + "\n")
-header.append("#rtl_gain: " + str(gain) + "\n")
+makeHeader()
 
 
 
