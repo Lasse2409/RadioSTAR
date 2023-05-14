@@ -129,6 +129,9 @@ for idx in range(numMeasurements*2):
     R.set(setAz + azElOffset[0], measuredCoordinateHorizontal[1] + azElOffset[1])
     R.status()
 
+    ### Collect data 
+    print("Measuring data...")
+    utilities.rtlSample(rtlSDRSetup, idx, header) #max samples is 256*1024*31
 
 
 
@@ -138,7 +141,7 @@ for idx in range(numMeasurements*2):
     sun = coordinates.getSun(dateAndTime, observer, now=True)
 
     ### Make target azimuth offset
-    target = [sun[1], (sun[1]-numMeasurements*angIncroment) + idx*angIncroment]
+    target = [sun[0], (sun[1]-numMeasurements*angIncroment) + idx*angIncroment]
 
     ### Store the measured coordinates in all coordinate systems (horizontal, galactic and equatorial)
     measuredCoordinateHorizontal = measurementCoordinates(0, target)[0]

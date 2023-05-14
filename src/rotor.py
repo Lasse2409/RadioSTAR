@@ -69,7 +69,7 @@ class rotor:
             time.sleep(0.5)
 
             self.statusInt()
-            self.status()
+            #self.status()
 
 
     def stop(self):
