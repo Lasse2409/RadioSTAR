@@ -97,12 +97,12 @@ R.status()
 time.sleep(2)
 
 ### scanning azimuth
-for idx in range(numMeasurements*2):
+for idx in range(numMeasurements):
     rtlSDRSetup[4] = "data/pointing/pointingDataAz-"
     sun = coordinates.getSun(dateAndTime, observer, now=True)
 
     ### Make target azimuth offset
-    target = [(sun[0]-numMeasurements*angIncroment) + idx*angIncroment, sun[1]]
+    target = [(sun[0]-0.5*(numMeasurements-1)*angIncroment) + idx*angIncroment, sun[1]]
 
     ### Store the measured coordinates in all coordinate systems (horizontal, galactic and equatorial)
     measuredCoordinateHorizontal = measurementCoordinates(0, target)[0]
@@ -138,12 +138,12 @@ for idx in range(numMeasurements*2):
 
 
 ### scanning azimuth
-for idx in range(numMeasurements*2):
+for idx in range(numMeasurements):
     rtlSDRSetup[4] = "data/pointing/pointingDataEl-"
     sun = coordinates.getSun(dateAndTime, observer, now=True)
 
     ### Make target azimuth offset
-    target = [sun[0], (sun[1]-numMeasurements*angIncroment) + idx*angIncroment]
+    target = [sun[0], (sun[1]-0.5*(numMeasurements-1)*angIncroment) + idx*angIncroment]
 
     ### Store the measured coordinates in all coordinate systems (horizontal, galactic and equatorial)
     measuredCoordinateHorizontal = measurementCoordinates(0, target)[0]
