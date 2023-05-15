@@ -68,7 +68,7 @@ def makeHeader():
 
 
 ### Global setup
-numMeasurements = 3
+numMeasurements = 10
 angIncroment = 1
 azElOffset = [231.4, -1] #offset for Az and El calibration 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
@@ -94,6 +94,7 @@ else:
 R.set(setAz + azElOffset[0], sun[1] + azElOffset[1])
 R.status()
 
+time.sleep(2)
 
 ### scanning azimuth
 for idx in range(numMeasurements*2):
@@ -130,6 +131,7 @@ for idx in range(numMeasurements*2):
     R.status()
 
     ### Collect data 
+    time.sleep(2)
     print("Measuring data...")
     utilities.rtlSample(rtlSDRSetup, idx, header) #max samples is 256*1024*31
 
@@ -172,10 +174,9 @@ for idx in range(numMeasurements*2):
 
 
     ### Collect data 
+    time.sleep(2)
     print("Measuring data...")
     utilities.rtlSample(rtlSDRSetup, idx, header) #max samples is 256*1024*31
-
-
 
 
 
