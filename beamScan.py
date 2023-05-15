@@ -68,7 +68,7 @@ def makeHeader():
 
 
 ### Global setup
-numMeasurements = 15
+numMeasurements = 21
 angIncroment = 1
 azElOffset = [231.4 + 10, -1 + 5] #offset for Az and El calibration 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
