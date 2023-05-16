@@ -70,7 +70,7 @@ def makeHeader():
 ### Global setup
 numMeasurements = 21
 angIncroment = 1
-azElOffset = [231.4, -1 ] #offset for Az and El calibration 
+azElOffset = [231.4 + 13, -1 +2] #offset for Az and El calibration 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
 dateAndTime = [2023, 5, 1, 16, 0, 0] #defining date and time [year, month, day, hour, minute, second]
 rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/pointing/pointingData-"] #defining data collection parameters for rtlSDR [samples, sampleRate, centerFreq, gain, filePathName] 
@@ -82,7 +82,7 @@ os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
 
 
 
-sun = coordinates.getObject('sun', dateAndTime, observer, now=True)
+sun = coordinates.getObject('venus', dateAndTime, observer, now=True)
 
 print("Going to target: " + str(sun))
 
@@ -99,7 +99,7 @@ time.sleep(2)
 ### scanning azimuth
 for idx in range(numMeasurements):
     rtlSDRSetup[4] = "data/pointing/pointingDataAz-"
-    sun = coordinates.getObject('sun', dateAndTime, observer, now=True)
+    sun = coordinates.getObject('venus', dateAndTime, observer, now=True)
 
     ### Make target azimuth offset
     target = [(sun[0]-0.5*(numMeasurements-1)*angIncroment) + idx*angIncroment, sun[1]]
@@ -140,7 +140,7 @@ for idx in range(numMeasurements):
 ### scanning azimuth
 for idx in range(numMeasurements):
     rtlSDRSetup[4] = "data/pointing/pointingDataEl-"
-    sun = coordinates.getObject('sun', dateAndTime, observer, now=True)
+    sun = coordinates.getObject('venus', dateAndTime, observer, now=True)
 
     ### Make target azimuth offset
     target = [sun[0], (sun[1]-0.5*(numMeasurements-1)*angIncroment) + idx*angIncroment]
