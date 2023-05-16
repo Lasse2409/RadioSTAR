@@ -49,6 +49,6 @@ dateAndTime = [2023, 5, 16, 18, 43, 0] #defining date and time [year, month, day
 
 
 
-object = coordinates.getObject('sun', dateAndTime, observer, now=True)
-print(object)
+objecta = coordinates.getObject('venus', dateAndTime, observer, now=True)
+print(objecta)
 

@@ -9,7 +9,7 @@
 from astropy import units as u
 from astropy.coordinates import AltAz, EarthLocation, SkyCoord
 from astropy.coordinates import get_sun
-from astropy.coordinates import get_icrs_coordinates
+from astropy.coordinates import get_body
 from astropy.time import Time
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -142,7 +142,7 @@ class coordinates:
             objectAzEl = get_sun(time).transform_to(AltAz(obstime=time, location=observer))
             
         else:
-            objectAzEl = get_icrs_coordinates(object).transform_to(AltAz(obstime=time, location=observer))
+            objectAzEl = get_body(object, time, observer).transform_to(AltAz(obstime=time, location=observer))
 
         
         # Return the az end el of sun position 
