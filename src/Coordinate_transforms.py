@@ -49,10 +49,10 @@ class coordinates:
         observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m) #Location converted to cartesian coordinates
         
         if now == True:
-           time = datetime.utcnow()
+            time = Time.now()
         else:    
-            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
-        time = Time(str(time)) 
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(dateAndTime[3]) + ':' + str(dateAndTime[4]) + ':' + str(dateAndTime[5])
+            time = Time(str(time)) 
         
         c_icrs = SkyCoord(ra=RA*u.degree, dec=DEC*u.degree, frame='icrs') #International Celestial Reference System (ICRS) 
         c_horizontal = c_icrs.transform_to(AltAz(obstime=time,location=observer))
@@ -64,10 +64,10 @@ class coordinates:
         observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m) 
         
         if now == True:
-           time = datetime.utcnow()
+            time = Time.now()
         else:    
-            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
-        time = Time(str(time))
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(dateAndTime[3]) + ':' + str(dateAndTime[4]) + ':' + str(dateAndTime[5])
+            time = Time(str(time)) 
         
         c_horizontal = SkyCoord(alt=EL*u.degree, az=AZ*u.degree, frame='altaz', obstime=time, location=observer)
         c_equatorial = c_horizontal.transform_to('icrs')
@@ -79,10 +79,10 @@ class coordinates:
         observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m) 
         
         if now == True:
-           time = datetime.utcnow()
+            time = Time.now()
         else:    
-            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
-        time = Time(str(time))
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(dateAndTime[3]) + ':' + str(dateAndTime[4]) + ':' + str(dateAndTime[5])
+            time = Time(str(time)) 
 
         c_galactic = SkyCoord(frame="galactic", l=L*u.degree, b=B*u.degree)
         c_horizontal = c_galactic.transform_to(AltAz(obstime=time,location=observer))
@@ -94,10 +94,10 @@ class coordinates:
         observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m) 
         
         if now == True:
-           time = datetime.utcnow()
+            time = Time.now()
         else:    
-            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(hour) + ':' + str(dateAndTime[3]) + ':' + str(dateAndTime[4])
-        time = Time(str(time))
+            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(dateAndTime[3]) + ':' + str(dateAndTime[4]) + ':' + str(dateAndTime[5])
+            time = Time(str(time)) 
 
         c_horizontal = SkyCoord(alt=EL*u.degree, az=AZ*u.degree, frame='altaz', obstime=time, location=observer)
         c_galactic = c_horizontal.galactic
@@ -111,10 +111,10 @@ class coordinates:
 
         # Define the time, either now or given in dateAndTime list
         if now == True:
-            time = datetime.utcnow()
+            time = Time.now()
         else:    
             time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(dateAndTime[3]) + ':' + str(dateAndTime[4]) + ':' + str(dateAndTime[5])
-        time = Time(str(time)) 
+            time = Time(str(time)) 
 
         # Get the Sun's position in Altitude-Azimuth coordinates at the current time and location
         sunAzEl = get_sun(time).transform_to(AltAz(obstime=time, location=observer))
@@ -129,11 +129,10 @@ class coordinates:
 
         # Define the time, either now or given in dateAndTime list
         if now == True:
-            time = datetime.utcnow()
+            time = Time.now()
         else:    
             time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(dateAndTime[3]) + ':' + str(dateAndTime[4]) + ':' + str(dateAndTime[5])
-        
-        time = Time(str(time))
+            time = Time(str(time)) 
 
         # Check if the object is the sun to change astropy method
         if object == 'Sun':

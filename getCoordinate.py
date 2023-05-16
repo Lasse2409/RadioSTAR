@@ -45,11 +45,10 @@ from src.Coordinate_transforms import coordinates
 
 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
-dateAndTime = [2023, 5, 15, 20, 54, 0] #defining date and time [year, month, day, hour, minute, second]
+dateAndTime = [2023, 5, 16, 18, 43, 0] #defining date and time [year, month, day, hour, minute, second]
 
 
 
-#object = coordinates.getObject('sun', dateAndTime, observer, now=False)
-object = coordinates.getSun(dateAndTime, observer, now=False)
+object = coordinates.getObject('sun', dateAndTime, observer, now=True)
 print(object)
 
