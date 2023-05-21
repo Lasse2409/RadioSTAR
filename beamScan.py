@@ -19,7 +19,7 @@ from src.utilities import utilities
 targetName = 'sun'
 numMeasurements = 21
 angIncroment = 1
-azElOffset = [231.4 + 12, -1 +2] #offset for Az and El calibration 
+#azElOffset = [231.4 + 12, -1 +2] #offset for Az and El calibration 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
 dateAndTime = [2023, 5, 1, 16, 0, 0] #defining date and time [year, month, day, hour, minute, second]
 rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/pointing/pointingData"] #defining data collection parameters for rtlSDR [samples, sampleRate, centerFreq, gain, filePathtargetName] 
@@ -29,7 +29,8 @@ R = rotor("192.168.1.104", 23)
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
 
 ### Start by going to the center point of the object targetName given 
-print("Going to target: " + str(coordinates.getObject(targetName, dateAndTime, observer, now=True)))
+target = coordinates.getObject(targetName, dateAndTime, observer, now=True)
+print("Going to target: " + str(target))
 R.set(utilities.fullRotationLimit(target)[0] + azElOffset[0], fullRotationLimit(target)[1] + azElOffset[1])
 R.status()
 time.sleep(3)
