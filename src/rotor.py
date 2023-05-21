@@ -12,18 +12,21 @@ class rotor:
         self.PH = 10
         self.PV = 10
 
+        self.overwrite = False
+
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect((self.IP, self.port))
         print("Rotor connected")
         self.statusInt()
 
     def setInt(self, az, el):
-        if el < 0:
-            return "Cannot set roter to el less than 0"
+        if self.overwrite == False and el < 0:
+            return("Cannot set roter to el less than 0")
+
 
         H = self.PH*(360 + az)
         V = self.PV*(360 + el)
-    
+
         HString = str(H)
         VString = str(V)
     
@@ -87,8 +90,8 @@ class rotor:
 
     def status(self):
         self.statusInt()
-        print("Az = " + str(self.az) + ", El = " + str(self.el)) # + ", PH = " + str(self.PH) + ", PV = " + str(self.PV)
-        return self.az, self.el
+        print("Az = " + str(self.az + utilities.azElOffset[0]) + ", El = " + str(self.el + utilities.azElOffset[1])) # + ", PH = " + str(self.PH) + ", PV = " + str(self.PV)
+        return self.az + utilities.azElOffset[0], self.el + utilities.azElOffset[1]
 
     def disconnect(self):
         self.client.close()
