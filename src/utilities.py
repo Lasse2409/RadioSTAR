@@ -45,13 +45,15 @@ class utilities:
             setAz = -(360-target[0])
         else:
             setAz = target[0]
-        
+
         return setAz, setEl
 
 
     def azElOffset():
-        azElOffset = [231.4 + 12, -1+2]
-        return azElOffset[0], azElOffset[1]
+        azOffset = 231.4 + 12
+	elOffset = -1 + 2
+
+        return azOffset, elOffset
         
 
     def rtlSample(self, dataFileExtension, header): 
