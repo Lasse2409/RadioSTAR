@@ -15,6 +15,10 @@ print("Going to stow work position")
 
 R.set(266, 0)
 
+R.overwrite = True
+R.set(275,-15)
+R.overwrite = False
+
 print('In stow position: ')
 
 R.status()

@@ -68,7 +68,7 @@ def makeHeader():
 azElOffset = [231.4 + 12, -1 +2] #offset for Az and El calibration 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
 dateAndTime = [2023, 5, 1, 16, 0, 0] #defining date and time [year, month, day, hour, minute, second]
-rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/11singleData-"] #defining data collection parameters for rtlSDR [samples, sampleRate, centerFreq, gain, filePathName] 
+rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/2singleData-"] #defining data collection parameters for rtlSDR [samples, sampleRate, centerFreq, gain, filePathName] 
 
 
 ### Defining coordinates to be tracked

@@ -3,7 +3,7 @@ import os
 from src.rotor import rotor
 
 
-azElOffset = [231.4, -1] #offset for Az and El calibration 
+azElOffset = [231.4 + 12, -1+2] #offset for Az and El calibration 
 
 ### Initializeing seriel connection to rotor and turning on bias tee
 R = rotor("192.168.1.104", 23)
