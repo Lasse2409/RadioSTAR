@@ -19,7 +19,7 @@ R.overwrite = True
 R.set(275,-15)
 R.overwrite = False
 
-print('In stow position: ')
+print('In work position: ')
 
 R.status()
 os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
