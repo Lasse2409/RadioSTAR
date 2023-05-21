@@ -61,8 +61,8 @@ class utilities:
         return setAz, setEl
 
 
-    def azElOffset:
-        azElOffset = [231.4, -1]
+    def azElOffset():
+        azElOffset = [231.4 + 12, -1+2]
         return azElOffset[0], azElOffset[1]
     
  

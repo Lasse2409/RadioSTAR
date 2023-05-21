@@ -14,7 +14,7 @@ print("Going to stow position: Az = 0 , El = 90")
 
 target = [0, 90]
 
-R.set(utilities.fullRotationLimit(target)[0] + utilities.azElOffset[0], utilities.fullRotationLimit[1] + utilities.azElOffset[1])
+R.set(utilities.fullRotationLimit(target)[0] + utilities.azElOffset()[0], utilities.fullRotationLimit(target)[1] + utilities.azElOffset()[1])
 
 print('In stow position: Az = 0 , El = 90')
 
