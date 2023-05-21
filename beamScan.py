@@ -31,12 +31,12 @@ os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 1")
 ### Start by going to the center point of the object targetName given 
 target = coordinates.getObject(targetName, dateAndTime, observer, now=True)
 print("Going to target: " + str(target))
-R.set(utilities.fullRotationLimit(target)[0] + azElOffset[0], fullRotationLimit(target)[1] + azElOffset[1])
+R.set(utilities.fullRotationLimit(target)[0] + utilities.azElOffset()[0], utilities.fullRotationLimit(target)[1] + utilities.azElOffset()[1])
 R.status()
 time.sleep(3)
 
 
-u = utilities(rtlSDRSetup, dateAndTime, observer)
+u = utilities(rtlSDRSetup, dateAndTime, observer, R)
 
 ### scanning azimuth
 u.lineScan("Az", targetName, numMeasurements, angIncroment)

@@ -5,16 +5,17 @@ from rtlsdr import *
 from pylab import *
 from astropy.time import Time
 
+from src.rotor import rotor
 from src.Coordinate_transforms import coordinates
 
 
 
 class utilities:
-    def __init__(self, rtlSDRSetup, dateAndTime, observer):
+    def __init__(self, rtlSDRSetup, dateAndTime, observer, R):
         self.rtlSDRSetup = rtlSDRSetup
         self.dateAndTime = dateAndTime
         self.observer = observer
-        #self.target = target
+        self.R = R
 
         #self.measurementCoordinates(self, targetCoordinateSystem)
 
@@ -152,8 +153,8 @@ class utilities:
             ### Go to target this one we want to loop over and repeatedly update while data is being collected
             print("Going to: (" + str(measuredCoordinates[0][0]) + ", " + str(measuredCoordinates[0][1]) + ")")
 
-            R.set(utilities.fullRotationLimit(target) + utilities.azElOffset[0], utilities.fullRotationLimit[1] + utilities.azElOffset[1])
-            R.status()
+            self.R.set(utilities.fullRotationLimit(target)[0] + utilities.azElOffset()[0], utilities.fullRotationLimit(target)[1] + utilities.azElOffset()[1])
+            self.R.status()
 
             ### Collect data 
             time.sleep(2)

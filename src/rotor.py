@@ -1,6 +1,5 @@
 import socket
 import time
-from src.utilities import utilities
 
 class rotor:
     def __init__(self, IP, port):
@@ -91,8 +90,8 @@ class rotor:
 
     def status(self):
         self.statusInt()
-        print("Az = " + str(self.az - utilities.azElOffset()[0]) + ", El = " + str(self.el - utilities.azElOffset()[1]))
-        return self.az - utilities.azElOffset()[0], self.el - utilities.azElOffset()[1]
+        print("Az = " + str(self.az) + ", El = " + str(self.el))
+        return self.az, self.el
 
     def disconnect(self):
         self.client.close()
