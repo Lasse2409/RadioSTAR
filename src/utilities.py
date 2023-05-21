@@ -49,9 +49,20 @@ class utilities:
 
         f.close()
 
+    ### If Az is more than 180 degrees, then go all the way around to 360-180 instead
+    def fullRotationLimit(target):    
+        setEl = target[1]
+
+        if target[0] > 180:
+            setAz = -(360-target[0])
+        else:
+            setAz = target[0]
+        
+        return setAz, setEl
 
 
-    def psd():
-        print('not finished function')
+    def azElOffset:
+        azElOffset = [231.4, -1]
+        return azElOffset[0], azElOffset[1]
     
  

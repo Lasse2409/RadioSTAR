@@ -1,5 +1,6 @@
 import socket
 import time
+from src.utilities import utilities
 
 class rotor:
     def __init__(self, IP, port):

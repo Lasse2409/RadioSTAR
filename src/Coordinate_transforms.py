@@ -104,27 +104,8 @@ class coordinates:
 
         return c_galactic.l.degree, c_galactic.b.degree
 
-    
-    def getSun(dateAndTime, observer, now=True):
-        # Define the location on Earth (latitude, longitude, elevation in meters)
-        observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m)
 
-        # Define the time, either now or given in dateAndTime list
-        if now == True:
-            time = Time.now()
-        else:    
-            time = str(dateAndTime[0]) + '-' + str(dateAndTime[1]) + '-' + str(dateAndTime[2]) + ' ' + str(dateAndTime[3]) + ':' + str(dateAndTime[4]) + ':' + str(dateAndTime[5])
-            time = Time(str(time)) 
-
-        # Get the Sun's position in Altitude-Azimuth coordinates at the current time and location
-        sunAzEl = get_sun(time).transform_to(AltAz(obstime=time, location=observer))
-        
-        # Return the az end el of sun position 
-        return sunAzEl.az.degree, sunAzEl.alt.degree
-
-
-
-    def getObject(object, dateAndTime, observer, now=True):
+    def getObject(name, dateAndTime, observer, now=True):
         observer = EarthLocation.from_geodetic(lat=observer[0]*u.deg, lon=observer[1]*u.deg, height=observer[2]*u.m)
 
         # Define the time, either now or given in dateAndTime list
@@ -135,14 +116,11 @@ class coordinates:
             time = Time(str(time)) 
 
         # Check if the object is the sun to change astropy method
-        if object == 'Sun':
+        if name == 'Sun' or name == 'sun':
             objectAzEl = get_sun(time).transform_to(AltAz(obstime=time, location=observer))
 
-        elif object == 'sun':
-            objectAzEl = get_sun(time).transform_to(AltAz(obstime=time, location=observer))
-            
         else:
-            objectAzEl = get_body(object, time, observer).transform_to(AltAz(obstime=time, location=observer))
+            objectAzEl = get_body(name, time, observer).transform_to(AltAz(obstime=time, location=observer))
 
         
         # Return the az end el of sun position 
