@@ -91,8 +91,7 @@ class rotor:
 
     def status(self):
         self.statusInt()
-        print("Az = " + str(self.az + utilities.azElOffset()[0]) + ", El = " + str(self.el + utilities.azElOffset()[1]))
-	#print("Az = " + str(self.az) + ", El = " + str(self.el)) # + ", PH = " + str(self.PH) + ", PV = " + str(self.PV)
+        print("Az = " + str(self.az) + ", El = " + str(self.el))
         return self.az + utilities.azElOffset()[0], self.el + utilities.azElOffset()[1]
 
     def disconnect(self):
