@@ -127,15 +127,17 @@ class utilities:
         
         return header
 
-    def lineScan(self, AzElScan, targetName, numMeasurements, angIncroment): #, targetName, numMeasurements,angIncroment, self.rtlSDRSetup, targetName, dateAndTime, observer):
+    def lineScan(self, azElScan, targetName, numMeasurements, angIncroment): #, targetName, numMeasurements,angIncroment, self.rtlSDRSetup, targetName, dateAndTime, observer):
         for idx in range(numMeasurements):
-
-            #file = self.rtlSDRSetup[4] + "Az-"
-            self.rtlSDRSetup[4] = self.rtlSDRSetup[4] + str(AzElScan) + "-"
+            
+            ### Aquire target object with targetName
             obj = coordinates.getObject(targetName, self.dateAndTime, self.observer, now=True)
 
-            ### Make target azimuth offset
-            target = [(obj[0]-0.5*(numMeasurements-1)*angIncroment) + idx*angIncroment, obj[1]]
+            ### Make target azimuth/elevation with incroment
+            if azElScan == "Az" or azElScan == "az" or azElScan == "AZ":
+                target = [(obj[0]-0.5*(numMeasurements-1)*angIncroment) + idx*angIncroment, obj[1]]
+            else:
+                target = [obj[0], (obj[1]-0.5*(numMeasurements-1)*angIncroment) + idx*angIncroment]
 
             ### Store the measured coordinates in all coordinate systems (horizontal, galactic and equatorial)
             measuredCoordinates = utilities.measurementCoordinates(self, 0, target)
@@ -159,7 +161,7 @@ class utilities:
             ### Collect data 
             time.sleep(2)
             print("Measuring data...")
-            utilities.rtlSample(self, idx, header) #max samples is 256*1024*31
+            utilities.rtlSample(self, "-" + str(azElScan) + str(idx), header) #max samples is 256*1024*31
 
 
 
