@@ -52,9 +52,7 @@ if measuredCoordinates[0][1] < 0:
 
 
 ### Go to target this one we want to loop over and repeatedly update while data is being collected
-print("Going to: (" + str(measuredCoordinates[0][0]) + ", " + str(measuredCoordinates[0][1]) + ")")
-
-
+print(f"Going to: {measuredCoordinates[0]}")
 R.set(utilities.fullRotationLimit(target)[0] + utilities.azElOffset()[0], utilities.fullRotationLimit(target)[1] + utilities.azElOffset()[1])
 
 

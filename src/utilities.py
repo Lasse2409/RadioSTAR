@@ -154,7 +154,6 @@ class utilities:
 
             ### Go to target this one we want to loop over and repeatedly update while data is being collected
             print("Going to: (" + str(measuredCoordinates[0][0]) + ", " + str(measuredCoordinates[0][1]) + ")")
-
             self.R.set(utilities.fullRotationLimit(target)[0] + utilities.azElOffset()[0], utilities.fullRotationLimit(target)[1] + utilities.azElOffset()[1])
             self.R.status()
 
@@ -165,4 +164,30 @@ class utilities:
 
 
 
-    
+    def skyScan(self, gridGalactic):
+        for idx in range(len(gridGalactic[:, 0])):
+            target = gridGalactic[idx,:]
+            
+            ### Store the measured coordinates in all coordinate systems (horizontal, galactic and equatorial)
+            measuredCoordinates = utilities.measurementCoordinates(self, 1, target)
+
+            ### Create header for data file (time, coordinates and sdr settings)
+            header = utilities.makeHeader(self, measuredCoordinates)
+            
+            ### Make sure that we dont go below elevation limit
+            if measuredCoordinates[0][1] < 0:
+                os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
+                return("Tool low elevation (<0)")
+            
+            ### Go to target this one we want to loop over and repeatedly update while data is being collected
+            print(f"Going to: {measuredCoordinates[0]}")
+            self.R.set(utilities.fullRotationLimit(measuredCoordinates[0])[0] + utilities.azElOffset()[0], utilities.fullRotationLimit(measuredCoordinates[0])[1] + utilities.azElOffset()[1])
+            self.R.status()
+
+            ### Collect data run all the time, the slow one governing how long to loop the tracking
+            print("Measuring data...")
+            utilities.rtlSample(self, idx, header) #max samples is 256*1024*31
+
+
+
+
