@@ -16,8 +16,8 @@ from src.utilities import utilities
 
 
 ### Global setup
-targetName = 'sun'
-numMeasurements = 21
+targetName = 'mars'
+numMeasurements = 11
 angIncroment = 1
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
 dateAndTime = [2023, 5, 1, 16, 0, 0] #defining date and time [year, month, day, hour, minute, second]
@@ -34,6 +34,7 @@ target = coordinates.getObject(targetName, dateAndTime, observer, now=True)
 print("Going to target: " + str(target))
 R.set(utilities.fullRotationLimit(target)[0] + utilities.azElOffset()[0], utilities.fullRotationLimit(target)[1] + utilities.azElOffset()[1])
 R.status()
+print("On target \n \n")
 time.sleep(3)
 
 ### Initialize the self variables in utilities
@@ -41,12 +42,15 @@ u = utilities(rtlSDRSetup, dateAndTime, observer, R)
 
 
 ### scanning azimuth
+print("Azimuth scanning target")
 u.lineScan("Az", targetName, numMeasurements, angIncroment)
+print("\n")
 
 
 ### scanning azimuth
+print("Elevation scanning target \n")
 u.lineScan("El", targetName, numMeasurements, angIncroment)
-
+print("\n \n")
 
 ### Check status and turn off bias tee
 R.status()

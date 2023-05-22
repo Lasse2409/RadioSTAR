@@ -23,8 +23,8 @@ rtlSDRSetup = [256*1024*31, 2.4e6, 1420e6, 49.6, "data/single/singleData-"] #def
 
 
 ### Defining coordinates to be tracked
-targetCoordinateSystem = 1 #declaring which coordinate system is used in taget coordinates (0-> horizontal, 1-> galactic(longitude,latitude), 2-> equatorial)
-target = np.array([100 + 0/60, 0 + 0/60]) #setting target coordinates 
+targetCoordinateSystem = 0 #declaring which coordinate system is used in taget coordinates (0-> horizontal, 1-> galactic(longitude,latitude), 2-> equatorial)
+target = np.array([240 + 0/60, 50 + 0/60]) #setting target coordinates 
 
 
 ### Initializeing seriel connection to rotor and turning on bias tee
@@ -47,18 +47,19 @@ header = u.makeHeader(measuredCoordinates)
 ### Make sure that we dont go below elevation limit
 if measuredCoordinates[0][1] < 0:
     os.system("./../rtl-sdr-blog/build/src/rtl_biast -b 0")
-    return("Tool low elevation (<0)")
+    print("Tool low elevation (<0)")
+    exit()
 
 
 ### Go to target this one we want to loop over and repeatedly update while data is being collected
-print("Going to: (" + str(measuredCoordinates[0][0]) + ", " + str(measuredCoordinateHorizontal[0][1]) + ")")
+print("Going to: (" + str(measuredCoordinates[0][0]) + ", " + str(measuredCoordinates[0][1]) + ")")
 
 
 R.set(utilities.fullRotationLimit(target)[0] + utilities.azElOffset()[0], utilities.fullRotationLimit(target)[1] + utilities.azElOffset()[1])
 
 
 ### Collect data run all the time, the slow one governing how long to loop the tracking
-utilities.rtlSample(1, header) #max samples is 256*1024*31
+u.rtlSample(1, header) #max samples is 256*1024*31
 
 
 ### Get coordinate status, turn pff bias tee and finish
