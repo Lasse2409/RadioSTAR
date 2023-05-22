@@ -11,8 +11,6 @@ from astropy.coordinates import AltAz, EarthLocation, SkyCoord
 from astropy.coordinates import get_sun
 from astropy.coordinates import get_body
 from astropy.time import Time
-from datetime import datetime
-import matplotlib.pyplot as plt
 import numpy as np
 
 

@@ -1,11 +1,11 @@
 # check howizontal coordinates of now, convert to galactic coordinates, and convert back to horizontal coordinates, check if above horizon. 
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
-from astropy.time import Time
-from datetime import datetime
-import time
-from rtlsdr import *
-from pylab import *
+#from astropy.time import Time
+#from datetime import datetime
+#import time
+#from rtlsdr import *
+#from pylab import *
 import os
 
 from src.Coordinate_transforms import coordinates
