@@ -49,8 +49,8 @@ class utilities:
 
 
     def azElOffset():
-        azOffset = 231.4 + 12
-        elOffset =-1+2
+        azOffset = 231.4 + 13
+        elOffset = -1
         
         return azOffset, elOffset
         
