@@ -19,7 +19,7 @@ class utilities:
 
 
     def skyBox(self, gridSize, AZ, EL):
-        sky_horizontal = np.zeros((gridsize[0]*gridSize[1], 2))
+        sky_horizontal = np.zeros((gridSize[0]*gridSize[1], 2))
 
         az = np.linspace(AZ[0], AZ[1], gridSize[0])
         el = np.linspace(EL[0], EL[1], gridSize[1])
@@ -27,7 +27,7 @@ class utilities:
 
         for idx1 in range(len(az)):
             for idx2 in range(len(el)):  
-                sky_horizontal[idx1*gridSize[0] + idx2, 0] = az[idx1]
+                sky_horizontal[idx1*gridSize[1] + idx2, 0] = az[idx1]
                 if idx1%2 == 0:
                     sky_horizontal[idx1*gridSize[1] + idx2, 1] = el[idx2]
                 else:
