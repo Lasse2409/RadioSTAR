@@ -14,9 +14,9 @@ from src.utilities import utilities
 
 
 
-gridSize = 10
-azLimits = [210, 220]
-elLimits = [70, 80]
+gridSize = [180, 70]
+azLimits = [10, 190]
+elLimits = [10, 80]
 
 observer = [55.3959, 10.3883, 17] #define location of observer [altitude, latitude, longitude]
 dateAndTime = [2023, 5, 1, 16, 0, 0] #defining date and time [year, month, day, hour, minute, second]

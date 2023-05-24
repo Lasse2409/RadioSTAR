@@ -3,6 +3,9 @@ clc
 close all
 clear;
 
+
+gridSize = [20, 20];
+
 az_start = 160;
 az_stop = 250;
 
@@ -10,11 +13,23 @@ el_start = 10;
 el_stop = 50;
 
 
-N = 400;
+N = gridSize(1)*gridSize(2);
 P = 256;
 
 ps = zeros(P, N);
 freq = zeros(P,N);
+
+
+
+for i = 1:N
+    filename= sprintf("data/maps/1/data-%d.dat",i-1);
+    data = readtable(filename);
+    
+    ps(:,i) = table2array(data(:, 1));
+    freq(:,i) = table2array(data(:, 2));
+
+end
+
 
 BWPerElement = (freq(end,1) - freq(1,1))/P;
 
@@ -25,16 +40,6 @@ line2 = 1.42080e+3;
 ElementOfFreq1 = round((line1 - freq(1,1))/BWPerElement);
 ElementOfFreq2 = round((line2 - freq(1,1))/BWPerElement);
 ElementOfFreqH = round((Hline - freq(1,1))/BWPerElement);
-
-
-for i = 1:N
-    filename= sprintf("data/data-%d.dat",i-1);
-    data = readtable(filename);
-    
-    ps(:,i) = table2array(data(:, 1));
-    freq(:,i) = table2array(data(:, 2));
-
-end
 
 %% Plotting raw spectra
 for i = 1:N
@@ -137,17 +142,15 @@ plot(freq(:,t),ps(:,t)-y2.');
 
 
 
-NN = 20;
+map = zeros(gridSize(1), gridSize(2));
 
-map = zeros(NN, NN);
-
-for i = 1:NN  %column (az)
-    for j = 1:NN %row (el)
+for i = 1:gridSize(1)  %column (az)
+    for j = 1:gridSize(2) %row (el)
 
         if mod(i, 2) == 0 
-            k = i*NN - j + 1;
+            k = i*gridSize(2) - j + 1;
         else
-            k = (i-1)*NN + j;
+            k = (i-1)*gridSize(2) + j;
         end
 
         %data = readtable("data/data-" + (k-1) + ".dat");
@@ -155,7 +158,7 @@ for i = 1:NN  %column (az)
         %ps = table2array(data(:, 1));
         %freq = table2array(data(:, 2));
 
-        %map(i, j) = max(ps_cal(:,k));
+        %map(j, i) = max(ps_cal(:,k));
         map(j, i) = max(ps_cal(ElementOfFreq1:ElementOfFreq2,k));
         %k
         k = k + 1;

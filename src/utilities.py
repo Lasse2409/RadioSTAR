@@ -18,20 +18,20 @@ class utilities:
         #self.measurementCoordinates(self, targetCoordinateSystem)
 
 
-    def skyBox(self, N, AZ, EL):
-        sky_horizontal = np.zeros((N*N, 2))
+    def skyBox(self, gridSize, AZ, EL):
+        sky_horizontal = np.zeros((gridsize[0]*gridSize[1], 2))
 
-        az = np.linspace(AZ[0], AZ[1], N)
-        el = np.linspace(EL[0], EL[1], N)
+        az = np.linspace(AZ[0], AZ[1], gridSize[0])
+        el = np.linspace(EL[0], EL[1], gridSize[1])
         el_reversed = np.flip(el,0)
 
         for idx1 in range(len(az)):
             for idx2 in range(len(el)):  
-                sky_horizontal[idx1*N + idx2, 0] = az[idx1]
+                sky_horizontal[idx1*gridSize[0] + idx2, 0] = az[idx1]
                 if idx1%2 == 0:
-                    sky_horizontal[idx1*N + idx2, 1] = el[idx2]
+                    sky_horizontal[idx1*gridSize[1] + idx2, 1] = el[idx2]
                 else:
-                    sky_horizontal[idx1*N + idx2, 1] = el_reversed[idx2]
+                    sky_horizontal[idx1*gridSize[1] + idx2, 1] = el_reversed[idx2]
 
         return sky_horizontal
 

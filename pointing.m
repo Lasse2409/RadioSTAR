@@ -3,7 +3,7 @@ clc
 close all
 clear;
 
-numMeasurements = 15;
+numMeasurements = 21;
 angIncrometn = 1;
 P = 256;
 
@@ -14,9 +14,9 @@ psEl = zeros(P, numMeasurements);
 freqEl = zeros(P,numMeasurements);
 
 for i = 1:numMeasurements
-    filename= sprintf("data/pointing/pointingDataAz-%d.dat",i-1);
+    filename= sprintf("data/pointing/sun/sunPointingData-Az%d.dat",i-1);
     dataAz = readtable(filename);
-    filename= sprintf("data/pointing/pointingDataEl-%d.dat",i-1);
+    filename= sprintf("data/pointing/sun/sunPointingData-El%d.dat",i-1);
     dataEl = readtable(filename);
 
     psAz(:,i) = table2array(dataAz(:, 1));
@@ -62,7 +62,7 @@ azOffset = az(azMaxIdx)  %the amount by which there is an offset
 
 figure();
 plot(az, azPeaks)
-title(['Elevation drift scan gain maxima of BB radiation (Sun)'])
+title(['Azimuth scan gain maxima of BB radiation (Sun)'])
 ylabel('gain maxima')
 xlabel('frequency [MHz]')
 hold on 
@@ -88,9 +88,13 @@ elOffset = el(elMaxIdx) %the amount by which there is an offset
 
 figure();
 plot(el, elPeaks)
-title(['Azimuth drift scan gain maxima of BB radiation (Sun)'])
+title(['Elevation scan gain maxima of BB radiation (Sun)'])
 ylabel('gain maxima')
 xlabel('frequency [MHz]')
 hold on 
 plot(ones(1,10)*elOffset, linspace(0,1.5E-2,10))
+
+
+
+
 
