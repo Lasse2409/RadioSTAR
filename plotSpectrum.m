@@ -25,7 +25,7 @@ filename= "data/calibration/calibrationData-1.dat";
 data = readtable(filename);
 psCalibration(:,1) = table2array(data(:, 1));
 
-filename= "data/rotationcurve/rotationcurveData-110.dat";
+filename= "data/rotationcurve/rotationcurveData-132.dat";
 %filename= "data/single/s7Data-[132  -1].dat";
 data = readtable(filename);
 
@@ -83,6 +83,14 @@ hold on
 ps_cal(:,1) = ps(:,1) - y2;
 
 plot(l,ps_cal)
+%%
+figure()
+%plot(l,  ps(:,1))
+%hold on 
+%plot(l,  ps_cal(:,1))
+%hold on 
+plot(l,  ps(:,1)./y2)
+
 
 %% Calibrating by subtracting calibration measurement
 
@@ -112,3 +120,18 @@ figure();
 plot(vel,ps_cal)
 hold on
 plot(vel, ps-psCalibration)
+
+%%
+
+angle = [8,14,30,49,60,95,110,10,37,59,67,81,88,99,117,132];
+vmax = [42,50,114,84,51,33,74,41,92,49,51,106,106,120,78,60];
+
+radius = 8.5*sin(angle*(pi/180));
+
+velocity = vmax + 220*sin(angle*(pi/180));
+
+figure();
+plot(radius, velocity, '*')
+title('Milkyway rotation curve ')
+xlabel('radius (kpc)')
+ylabel('velocity km/s')

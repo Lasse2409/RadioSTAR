@@ -4,13 +4,13 @@ close all
 clear;
 
 
-gridSize = [20, 20];
+gridSize = [32, 16];
 
-az_start = 160;
-az_stop = 250;
+az_start = 180;
+az_stop = 360;
 
-el_start = 10;
-el_stop = 50;
+el_start = 5;
+el_stop = 85;
 
 
 N = gridSize(1)*gridSize(2);
@@ -22,7 +22,7 @@ freq = zeros(P,N);
 
 
 for i = 1:N
-    filename= sprintf("data/maps/1/data-%d.dat",i-1);
+    filename= sprintf("data/maps/2/mapData%d.dat",i-1);
     data = readtable(filename);
     
     ps(:,i) = table2array(data(:, 1));
@@ -35,23 +35,23 @@ BWPerElement = (freq(end,1) - freq(1,1))/P;
 
 Hline = 1.4204e+3;
 line1 = 1.42045e+3;
-line2 = 1.42080e+3;
+line2 = 1.42088e+3;
 
 ElementOfFreq1 = round((line1 - freq(1,1))/BWPerElement);
 ElementOfFreq2 = round((line2 - freq(1,1))/BWPerElement);
 ElementOfFreqH = round((Hline - freq(1,1))/BWPerElement);
 
 %% Plotting raw spectra
-for i = 1:N
-    figure(1);
-    clf;
-    hold on;
-    plot(freq(:,i), ps(:,i));
-    ylim([0 1E-2])
-    plot(ones(10,1)*(Hline), linspace(0,1E-2,10))
-    i
-    pause(0.05)
-end
+% for i = 1:N
+%     figure(1);
+%     clf;
+%     hold on;
+%     plot(freq(:,i), ps(:,i));
+%     ylim([0 1E-2])
+%     plot(ones(10,1)*(Hline), linspace(0,1E-2,10))
+%     i
+%     pause(0.05)
+% end
 %% Fitting all spectra
 
 ps_cal = zeros(size(ps));    
@@ -99,43 +99,43 @@ end
 
 
 %% Fitting individual
-close all
-t = 83;
-
-
-d = ps(:,t);
-v = 1:length(d);
-l = v.'
-
-start1 = 90;
-end1 = 170;
-start2 = 220;
-
-fit_x = [l(start1:end1).', l(start2:end).'];
-fit_y = [d(start1:end1).', d(start2:end).'];
-
-p1 = polyfit(fit_x,fit_y,6);
-y1 = polyval(p1,l(start1:end));
-d(start1:end) = y1 %replace second half with fitted data (to avoid the h line)
-
-
-% plot 
-figure;
-plot(l.', ps(:,t)); %Plot raw data on simple x axis
-hold on
-
-plot(l.',d) %plot raw data with halffitted data
-hold on
-
-% fitting the M shape 
-p2 = polyfit(l.', d, 10);
-y2 = polyval(p2,l.');
-
-plot(l.',y2); %plot the final fit og M shape
-
-
-figure();
-plot(freq(:,t),ps(:,t)-y2.');
+% close all
+% t = 83;
+% 
+% 
+% d = ps(:,t);
+% v = 1:length(d);
+% l = v.'
+% 
+% start1 = 90;
+% end1 = 170;
+% start2 = 220;
+% 
+% fit_x = [l(start1:end1).', l(start2:end).'];
+% fit_y = [d(start1:end1).', d(start2:end).'];
+% 
+% p1 = polyfit(fit_x,fit_y,6);
+% y1 = polyval(p1,l(start1:end));
+% d(start1:end) = y1 %replace second half with fitted data (to avoid the h line)
+% 
+% 
+% % plot 
+% figure;
+% plot(l.', ps(:,t)); %Plot raw data on simple x axis
+% hold on
+% 
+% plot(l.',d) %plot raw data with halffitted data
+% hold on
+% 
+% % fitting the M shape 
+% p2 = polyfit(l.', d, 10);
+% y2 = polyval(p2,l.');
+% 
+% plot(l.',y2); %plot the final fit og M shape
+% 
+% 
+% figure();
+% plot(freq(:,t),ps(:,t)-y2.');
 
 
 %% plot map
@@ -161,8 +161,8 @@ for i = 1:gridSize(1)  %column (az)
         %map(j, i) = max(ps_cal(:,k));
         map(j, i) = max(ps_cal(ElementOfFreq1:ElementOfFreq2,k));
         %k
-        k = k + 1;
-        %pause(0.5)
+        k = k + 1
+%        pause(0.1)
     end
 end
 
