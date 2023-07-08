@@ -173,10 +173,10 @@ class utilities:
             header = utilities.makeHeader(self, measuredCoordinates)
             
             ### Make sure that we dont go below elevation limit
-            if measuredCoordinates[0][1] < 0:
-                print("too low") 
-                utilities.rtlSample(self, idx, header) 
-		        continue 
+            #if measuredCoordinates[0][1] < 0:
+            #    print("too low") 
+            #    utilities.rtlSample(self, idx, header) 
+		    #    continue 
             
             ### Go to target this one we want to loop over and repeatedly update while data is being collected
             print(f"Going to: {measuredCoordinates[0]}")
